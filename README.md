@@ -1,4 +1,4 @@
-# Movie Library
+# JMovies - Movie Library
 
 This repo is for my school project. It is a movie library that allows users to search for movies, view movie details, and add movies to their watchlist.
 
