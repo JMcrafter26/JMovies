@@ -1,5 +1,7 @@
 # JMovies - Movie Library
 
+![assets/image/logo/logo.png](assets/image/logo/logo.png)
+
 This repo is for my school project. It is a movie library that allows users to search for movies, view movie details, and add movies to their watchlist.
 
 It's mainly inspired by the [IMDb](https://www.imdb.com/) and [Letterboxd](https://letterboxd.com/) websites.
@@ -38,6 +40,7 @@ I wanted to keep things simple, so I chose to use the following technologies:
 - **jQuery**: JavaScript library
 - **Swiper**: JavaScript slider library
 - **FontAwesome**: Icon library
+- **Icons8**: Icon library, especially for the logo
 
 #### Backend
 
