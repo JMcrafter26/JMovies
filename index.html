@@ -206,8 +206,6 @@
                 <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#categories"><i
                         class="fas fa-bars"></i></button>
             </div>
-
-
         </div>
     </nav>
     <!-- categories -->
@@ -244,8 +242,8 @@
                                     <span class="rating-value">8.5</span>
                                 </div>
                                 <div class="movie-slide-actions">
-                                    <button class="btn btn-primary">Watch Now</button>
-                                    <button class="btn btn-secondary">Add to Playlist</button>
+                                    <button class="btn btn-primary">Watch</button>
+                                    <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -270,8 +268,8 @@
                                     <span class="rating-value">8.5</span>
                                 </div>
                                 <div class="movie-slide-actions">
-                                    <button class="btn btn-primary">Watch Now</button>
-                                    <button class="btn btn-secondary">Add to Playlist</button>
+                                    <button class="btn btn-primary">Watch</button>
+                                    <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +286,7 @@
     </div>
 
     <style>
-        .movie-popular-slide {
+        .trending-slide {
             position: relative;
             width: 160px;
             height: 290px;
@@ -296,15 +294,20 @@
             border-radius: 10px;
         }
 
+        .trending-slide:hover {
+            /* make image darker on hover */
+            filter: brightness(0.9);
+        }
 
 
-        .movie-popular-slide img {
+
+        .trending-slide img {
             width: 100%;
             height: 65%;
             object-fit: cover;
         }
 
-        .movie-popular-shadow {
+        .trending-shadow {
             position: relative;
             left: 0;
             right: 0;
@@ -317,7 +320,7 @@
             z-index: 1;
         }
 
-        .movie-popular-shadow2 {
+        .trending-shadow2 {
             position: relative;
             left: 0;
             right: 0;
@@ -329,7 +332,7 @@
             z-index: 1;
         }
 
-        .movie-popular-content {
+        .trending-content {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -344,106 +347,106 @@
             z-index: 2;
         }
 
-        .movie-popular-slide-title {
-            font-size: 24px;
+        .trending-slide-title {
+            font-size: 22px;
             font-weight: 600;
             margin-bottom: 10px;
+            display: none;
         }
 
-        .movie-popular-slide-rating {
+      
+
+        .trending-slide-rating {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
             font-size: 13px;
         }
 
-        .movie-popular-slide-actions {
+        .trending-slide-actions {
             display: flex;
             justify-content: space-between;
             gap: 10px;
         }
 
-        .movie-popular-slide-actions button {
+        .trending-slide-actions button {
             font-size: 14px;
             height: 30px;
             padding: 0;
         }
 
-        .movie-popular-slide-actions button:first-child {
+        .trending-slide-actions button:first-child {
             width: 60%;
         }
 
-        .movie-popular-slide-actions button:last-child {
+        .trending-slide-actions button:last-child {
             width: 30%;
         }
 
         /* on not mobile screens */
         @media (min-width: 768px) {
-            .movie-popular-slide {
+            .trending-slide {
                 width: 200px;
                 height: 350px;
             }
 
-            .movie-popular-slide img {
+            .trending-slide img {
                 height: 70%;
             }
 
-            .movie-popular-shadow {
+            .trending-shadow {
                 bottom: 84px;
                 height: 50px;
             }
 
-            .movie-popular-shadow2 {
+            .trending-shadow2 {
                 bottom: 124px;
                 height: 40px;
             }
 
-            .movie-popular-content {
+            .trending-content {
                 height: 140px;
             }
 
-            .movie-popular-slide-title {
+            .trending-slide-title {
                 font-size: 28px;
             }
 
-            .movie-popular-slide-rating {
+            .trending-slide-rating {
                 font-size: 16px;
             }
 
-            .movie-popular-slide-actions button {
+            .trending-slide-actions button {
                 font-size: 16px;
                 height: 40px;
             }
 
-            .movie-popular-slide-actions button:first-child {
+            .trending-slide-actions button:first-child {
                 width: 70%;
             }
 
-            .movie-popular-slide-actions button:last-child {
+            .trending-slide-actions button:last-child {
                 width: 30%;
             }
 
 
         }
-
-
-        
     </style>
 
-    <h2 class="m-4 mb-0">Popular Movies</h2>
+    <h2 class="m-4 mb-0">Trending Movies</h2>
 
     <!-- Featured Movies swiper in freemode, with smaller cards, with only movie poster and title -->
-    <div class="swiper m-2" id="popular-movies">
+    <div class="swiper m-2" id="trending-movies">
         <div class="swiper-wrapper">
-            <!-- make a new movie swiper (leave the old one at the top as it is and the css with it) with smaller cards like the netflix popular movies, with multiple slides on one page. there should not be a banner, only movie poster and title, rating and watch now button. the title and details should be at the bottom with a gradient overlay. to avoid any errors give the custom css a new class name like movie-popular-slide -->
-            <div class="movie-popular-slide swiper-slide">
+            <!-- make a new movie swiper (leave the old one at the top as it is and the css with it) with smaller cards like the netflix popular movies, with multiple slides on one page. there should not be a banner, only movie poster and title, rating and watch now button. the title and details should be at the bottom with a gradient overlay. to avoid any errors give the custom css a new class name like trending-slide -->
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -453,21 +456,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -477,21 +480,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -501,21 +504,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -525,21 +528,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -549,21 +552,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -573,21 +576,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -597,21 +600,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -621,21 +624,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -645,21 +648,21 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="movie-popular-slide swiper-slide">
+            <div class="trending-slide swiper-slide">
                 <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
                     alt="Movie Poster" class="movie-slide-poster">
-                <div class="movie-popular-shadow"></div>
-                <div class="movie-popular-shadow2"></div>
-                <div class="movie-popular-content">
-                    <h3 class="movie-popular-slide-title">Movie Title</h3>
-                    <div class="movie-popular-slide-rating d-flex justify-content-between">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Movie Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
                         <span>
                             <i class="fas fa-star"></i>
                             <span class="rating-value">8.5</span>
@@ -669,7 +672,7 @@
                             <span class="rating-value">2h 30m</span>
                         </span>
                     </div>
-                    <div class="movie-popular-slide-actions">
+                    <div class="trending-slide-actions">
                         <button class="btn btn-primary">Watch</button>
                         <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                     </div>
@@ -677,15 +680,370 @@
             </div>  
         </div>
     
-        <div class="swiper-pagination" id="popular-movies-pagination"></div>
+        <div class="swiper-pagination" id="trending-movies-pagination"></div>
     
-        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="popular-movies-prev"></div>
-        <div class="swiper-button-next d-none d-lg-block d-md-block" id="popular-movies-next"></div>
+        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="trending-movies-prev"></div>
+        <div class="swiper-button-next d-none d-lg-block d-md-block" id="trending-movies-next"></div>
+    </div>
+    <br>
+
+    <h2 class="m-4 mb-0">Trending Series</h2>
+    <div class="swiper m-2" id="trending-series">
+        <div class="swiper-wrapper">
+            <!-- make a new movie swiper (leave the old one at the top as it is and the css with it) with smaller cards like the netflix popular movies, with multiple slides on one page. there should not be a banner, only movie poster and title, rating and watch now button. the title and details should be at the bottom with a gradient overlay. to avoid any errors give the custom css a new class name like trending-slide -->
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Furiosa: A Mad Max Saga</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+                    <h3 class="trending-slide-title">Series Title</h3>
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    
+        <div class="swiper-pagination" id="trending-series-pagination"></div>
+    
+        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="trending-series-prev"></div>
+        <div class="swiper-button-next d-none d-lg-block d-md-block" id="trending-series-next"></div>
     </div>
 
-    <br>
-    <br>
-    <br>
+    <style>
+        /* actor slide, rounded image, below the name and popularity */
+        .actor-slide {
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            width: 200px;
+            max-width: 200px;
+            /* border: 1px solid #3aa6d9; */
+            text-align: center;
+        }
+
+        .actor-slide:hover {
+            filter: brightness(0.9);
+        }
+
+        .actor-slide-poster {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .actor-slide-content {
+            flex: 1;
+        }
+
+        .actor-slide-title {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .actor-slide-job {
+            font-size: 15px;
+        }
+
+        
+        @media (min-width: 768px) {
+            .actor-slide {
+                width: 250px;
+                max-width: 250px;
+            }
+
+            .actor-slide-poster {
+                width: 200px;
+                height: 200px;
+            }
+
+            .actor-slide-title {
+                font-size: 28px;
+            }
+
+            .actor-slide-job {
+                font-size: 18px;
+            }
+        }
+
+    </style>
+
+    <!-- Popular Actors -->
+    <h2 class="m-4 mb-0">Popular Actors</h2>
+    <div class="swiper m-2" id="popular-actors">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide actor-slide">
+                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
+                    class="actor-slide-poster">
+                <div class="actor-slide-content">
+                    <h3 class="actor-slide-title">Actor Name</h3>
+                    <h4 class="actor-slide-job">20y/o Actor</h4>
+                </div>
+            </div>
+
+            <div class="swiper-slide actor-slide">
+                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
+                    class="actor-slide-poster">
+                <div class="actor-slide-content">
+                    <h3 class="actor-slide-title">Actor Name</h3>
+                    <h4 class="actor-slide-job">20y/o Actor</h4>
+                </div>
+            </div>
+
+            <div class="swiper-slide actor-slide">
+                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
+                    class="actor-slide-poster">
+                <div class="actor-slide-content">
+                    <h3 class="actor-slide-title">Actor Name</h3>
+                    <h4 class="actor-slide-job">20y/o Actor</h4>
+                </div>
+            </div>
+
+            <div class="swiper-slide actor-slide">
+                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
+                    class="actor-slide-poster">
+                <div class="actor-slide-content">
+                    <h3 class="actor-slide-title">Actor Name</h3>
+                    <h4 class="actor-slide-job">20y/o Actor</h4>
+                </div>
+            </div>
+  
+        </div>
+
+        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="popular-actors-prev"></div>
+        <div class="swiper-button-next d-none d-lg-block d-md-block" id="popular-actors-next"></div>
+    </div>
+
     <br>
 
 
@@ -716,27 +1074,59 @@
                     nextEl: '#featured-movies-next',
                     prevEl: '#featured-movies-prev',
                 },
+                disableOnInteraction: true,
                 autoplay: {
                     delay: 5000,
                 },
             });
 
- 
+            // // on hover stop autoplay
+            $('#featured-movies').mouseenter(function () {
+                console.log('stop autoplay');
+                swiper.autoplay.stop();
+            });
+            $('#featured-movies').mouseleave(function () {
+                console.log('start autoplay');
+                swiper.autoplay.start();
+            });
 
-
-
-            var swiper = new Swiper('#popular-movies', {
+            swiper = new Swiper('#trending-movies', {
                 // no pagination, use freemode
                 slidesPerView: "auto",
                 spaceBetween: 10,
                 freeMode: true,
-                
-                autoplay: {
-                    delay: 5000,
+                loop: true,
+                navigation: {
+                    nextEl: '#trending-movies-next',
+                    prevEl: '#trending-movies-prev',
                 },
-
             });
 
+            swiper = new Swiper('#trending-series', {
+                // no pagination, use freemode
+                slidesPerView: "auto",
+                spaceBetween: 10,
+                freeMode: true,
+                loop: true,
+                navigation: {
+                    nextEl: '#trending-series-next',
+                    prevEl: '#trending-series-prev',
+                },
+            });
+
+            swiper = new Swiper('#popular-actors', {
+                // no pagination, use freemode
+                slidesPerView: "auto",
+                spaceBetween: 1,
+                freeMode: true,
+                loop: true,
+                navigation: {
+                    nextEl: '#popular-actors-next',
+                    prevEl: '#popular-actors-prev',
+                },
+            });
+
+            
         }
 
         $(document).ready(function () {
