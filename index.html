@@ -783,22 +783,24 @@
 
     <!--Scripts-->
     <script>
+    let startTimestamp = Date.now();
         // After page has fully loaded
         window.addEventListener('DOMContentLoaded', function () {
-            // setTimeout(function () {
-            //     // Remove the page loader
-            //     document.querySelector('.page-loader img').classList.remove('page-loader-animation');
-            //     document.querySelector('.page-loader').classList.add('page-loader-fade');
-            //     setTimeout(function () {
-            //         document.querySelector('.page-loader').style.display = 'none';
-            //     }, 600);
-            // }, 4000);
+            // if startTimestamp is lower than 2 seconds, fade out, else remove
+            let timeElapsed = Date.now() - startTimestamp;
+
+            if (timeElapsed > 2000) {
             // Remove the page loader
             document.querySelector('.page-loader img').classList.remove('page-loader-animation');
             document.querySelector('.page-loader').classList.add('page-loader-fade');
             setTimeout(function () {
                 document.querySelector('.page-loader').style.display = 'none';
             }, 600);
+        } else {
+            document.querySelector('.page-loader').classList.add('page-loader-fade');
+            document.querySelector('.page-loader').style.display = 'none';
+            document.querySelector('.page-loader img').classList.remove('page-loader-animation');
+        }
         });
     </script>
 
