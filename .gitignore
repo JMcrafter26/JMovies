@@ -10,4 +10,4 @@ backend/
 
 # exclude everything in assets/css/bootswatch except the assets/css/bootswatch/dist/cyborg/
 assets/css/bootswatch/*
-!assets/css/bootswatch/dist/cyborg/
+!assets/css/bootswatch/dist/cyborg/*
