@@ -8,22 +8,15 @@
     <title>Movies Library</title>
         <link rel="stylesheet" href="assets/css/bootswatch/dist/cyborg/bootstrap.min.css">
 
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"> -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
-
     <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
-
 <body>
     <!-- navbar with logo and search icon which expands to search bar on click -->
     <nav class="navbar navbar-expand-lg ">
         <div class="container container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="./">
                 <img src="assets/image/logo/logo.png" alt="logo" width="100">
             </a>
             <!-- center search bar -->
@@ -76,7 +69,7 @@
                                     <span class="rating-value">8.5</span>
                                 </div>
                                 <div class="movie-slide-actions">
-                                    <button class="btn btn-primary">Watch</button>
+                                    <a class="btn btn-primary" href="watch.html">Watch</a>
                                     <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
@@ -102,7 +95,7 @@
                                     <span class="rating-value">8.5</span>
                                 </div>
                                 <div class="movie-slide-actions">
-                                    <button class="btn btn-primary">Watch</button>
+                                    <a class="btn btn-primary" href="watch.html">Watch</a>
                                     <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
@@ -844,7 +837,7 @@
             swiper = new Swiper('#trending-movies', {
                 // no pagination, use freemode
                 slidesPerView: "auto",
-                spaceBetween: 10,
+                spaceBetween: 15,
                 freeMode: true,
                 loop: true,
                 navigation: {
@@ -856,7 +849,7 @@
             swiper = new Swiper('#trending-series', {
                 // no pagination, use freemode
                 slidesPerView: "auto",
-                spaceBetween: 10,
+                spaceBetween: 15,
                 freeMode: true,
                 loop: true,
                 navigation: {

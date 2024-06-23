@@ -1,0 +1,374 @@
+<!-- Movie Library like Netflix -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Library</title>
+        <link rel="stylesheet" href="assets/css/bootswatch/dist/cyborg/bootstrap.min.css">
+
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- navbar with logo and search icon which expands to search bar on click -->
+    <nav class="navbar watch-navbar navbar-expand-lg ">
+        <div class="container container-fluid">
+            <a class="navbar-brand" href="./">
+                <img src="assets/image/logo/logo.png" alt="logo" width="100">
+            </a>
+            <!-- center search bar -->
+
+            <!-- right side buttons -->
+            <div class="d-flex ">
+                <form class="d-none d-lg-flex d-md-flex input-group">
+                    <input class="form-control form-control-outline-primary" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <button class="btn btn-outline-primary d-block d-lg-none d-md-none"><i
+                        class="fas fa-search"></i></button>
+                <button class="btn btn-outline-primary mx-2"><i class="fas fa-user"></i></button>
+                <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#categories"><i
+                        class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+    <!-- categories -->
+    <div class="collapse mt-2" id="categories">
+        <div class="container container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="list-group">
+                        <li class="list-group-item">Action</li>
+                        <li class="list-group-item">Adventure</li>
+                        <li class="list-group-item">Comedy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+       
+
+        .ad-banner {
+            background: #fff;
+            color: #000;
+            display: none;
+            opacity: 0;
+            
+            /* at the top right corner */
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 20px;
+            width: 70%;
+            max-width: 450px;
+            height: 100px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+        }
+
+        .ad-banner-show {
+            display: block;
+            opacity: 1;
+            transition: all 0.5s;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .ad-banner button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            color: #000;
+            z-index: 1001;
+        }
+
+        .ad-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 10px;
+            padding-bottom: 25px;
+            padding-right: 10px;
+        }
+
+        .ad-banner h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ad-banner p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+
+    <!-- cheap ad banner like on some sketchy websites -->
+    <div class="ad-banner">
+        <button
+            onclick="document.querySelector('.ad-banner').style.display = 'none'">X</button>
+        <div class="ad-content"  onclick="window.location.href = 'https://www.google.com'">
+            
+            <h1>🔥Akustik Fabian 2km away from you</h1>
+            <p>Click here to meet him (Schwul und geil)</p>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            // document.querySelector('.ad-banner').classList.add('ad-banner-show');
+        }, 5000);
+    </script>
+
+    <!-- Watch Page -->
+    <!-- Video trailer as background and with text and information
+    about the movie -->
+    <!-- <div class="watch-title-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="watch-container">
+                    <video class="watch-video" src="assets/video/trailer.mp4" controls></video>
+                    <div class="watch-info">
+                        <h1 class="watch-title">Movie Title</h1>
+                        <p class="watch-description">Movie Description</p>
+                        <button class="btn btn-primary">Watch Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <style>
+        .banner{
+	position:relative;
+	width:100%;
+	min-height:100vh;
+	padding:0 100px;
+	display:flex;
+	justify-content:flex-start;
+	align-items:center;
+}
+
+.banner .bg{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	object-fit:cover;
+}
+
+.content{
+	position:relative;
+	z-index:1;
+	max-width:550px;
+}
+
+.movieTitle{
+	max-width:250px;
+    border-radius: 15px;
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+.banner .content h4{
+	color: rgba(255,255,255,0.5);
+	font-weight:500;
+}
+
+.banner .content h4 span{
+	padding:0 10px;
+	border-right:1px solid rgba(255,255,255,0.5);
+}
+
+.banner .content h4 span:first-child{
+	padding-left:0;
+}
+
+.banner .content h4 span:last-child{
+	border-right:none;
+}
+
+.banner .content h4 span i {
+	background: var(--bs-primary);
+	color:#fff;
+	padding:0 8px;
+	display:inline-block;
+	font-style:normal;
+	border-radius:4px;
+}
+
+.banner .content p {
+	font-size:1em;
+	font-weight:300;
+	line-height:1.5em;
+	color: #fff;
+	margin: 10px 0 20px;
+}
+
+
+
+
+.play{
+	position:absolute;
+	bottom:50px;
+	left:100px;
+	display:inline-flex;
+	justify-content:flex-start;
+	align-items:center;
+	color:#fff;
+	text-transform:uppercase;
+	font-weight:500;
+	text-decoration:none;
+	letter-spacing:1px;
+	font-size:1.2em;
+	cursor:pointer;
+}
+
+.play img{
+	margin-right:10px;
+	max-width:50px;
+}
+
+.trailer{
+	position:fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	z-index: 100000;
+	width: 100%;
+	height:100%;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	backdrop-filter:blur(20px);
+	visibility:hidden;
+	opacity:0;
+}
+
+.trailer.active{
+	visibility:visible;
+	opacity:1;
+}
+
+.trailer video{
+	max-width:900px;
+	outline:none;
+	
+}
+
+.close{
+	position:absolute;
+	top: 30px;
+	right: 30px;
+	cursor:pointer;
+	filter:invert(1);
+	max-width:32px;
+}
+
+@media (max-width: 1024px){
+	.navigation li{
+		margin: 0 4px;
+	}
+	.banner{
+		padding: 100px 100px;
+	}
+	.banner .play{
+		bottom:40px;
+	}
+}
+
+@media (max-width: 991px){
+	header{
+		padding:20px 50px;
+		flex-direction:column;
+	}
+	.banner{
+		padding:100px 50px;
+	}
+	.banner .play{
+		left:50px;
+		font-size:1em;
+	}
+	.play img{
+		margin-right:10px;
+		max-width:40px;
+	}
+	.trailer video{
+		max-width:90%;
+	}
+}
+
+@media (max-width: 768px){
+	.banner {
+    padding: 170px 50px;
+	}
+	.banner .play{
+		bottom: 110px;
+	}
+}
+
+@media (max-width: 600px){
+
+	.banner{
+		padding:220px 20px 120px;
+	}
+	.banner .play{
+		left:20px;
+		bottom:30px;
+	}
+	.close{
+		max-width:20px;
+	}
+}
+    </style>
+
+    <div class="banner">
+        <img src="./assets/image/7bdh8bG.jpg" class="bg" alt="bg img">
+        <div class="content">
+            <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg" alt="movie name" class="movieTitle">
+            <h4>
+                <span>2020</span>
+                <span><i>+13</i></span>
+                <span>1h 55min</span>
+                <span>Action</span>
+            </h4>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur aliquam tenetur quasi ea recusandae, facere eum ipsa perferendis accusantium quas harum eius, ex quia quisquam nulla. Officia dolorem repudiandae voluptatum.</p>
+            <div class="">
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play</a>
+                <a href="#" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> My List</a>
+            </div>
+        </div>
+        <a class="play">
+            <i class="fa-solid fa-play me-2"></i>
+            Watch Trailer</a>
+    </div>
+
+    <br>
+    lol
