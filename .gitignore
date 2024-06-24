@@ -1,6 +1,6 @@
 # Ignore backend for now, so I don't accidentally leak secrets
-backend/
-*.php
+# backend/
+# *.php
 *.sql
 
 # Ignore these files too

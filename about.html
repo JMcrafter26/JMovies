@@ -5,12 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies Library</title>
+    <title>About - Movies Library</title>
 
     <script>
         let startTimestamp = Date.now();
     </script>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css"> <!-- Customized Bootswatch theme (not the regular one) -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Customized Bootswatch theme (not the regular one) -->
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
 
@@ -22,7 +23,7 @@
 
 
     <link rel="stylesheet" href="assets/css/style.css">
- 
+
 </head>
 
 <body>
@@ -66,42 +67,73 @@
         </div>
     </div>
 
-    <!-- main content -->
-    <div class="imprint">
-        <h2>Imprint</h2>
-        <p>Website Owner: John M.</p>
-        <p>Location: Stuttgart, Germany</p>
-        <p>Email: <a href="mailto:contact@jm26.net">contact@jm26.net</a></p>
-    </div>
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
 
-    <footer>
-        <div class="container">
-            <div class="social-link">
-                <ul class="">
-                    <li><a href="https://go.jm26.net/jm"><i class="fas fa-globe"></i></a></li>
-                    <li><a href="https://go.jm26.net/github"><i class="fab fa-github"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-            <div class="social-link">
-                <ul class="d-flex list-none">
-                    <li><a href="./">Home</a></li>
-                    <li><a href="./about.html">About</a></li>
-                </ul>
-            </div>
-            <div class="copyright">
-                <p>© <span id="year"></span> JM26.NET</p>
-                <p>Designed by John M. aka <a href="https://go.jm26.net/github">JMcrafter26</a>
+                <hr>
+                <div class="d-flex justify-content-center mb-3">
+                    <img src="assets/image/popcorn_256.png" alt="logo" width="200">
+                </div>
+                <h2>About JMovies</h2>
+                <p>JMovies (or JMOVIES) is a movie library website that is similar to <a
+                        href="https://imdb.com">IMDb</a>, <a href="https://letterboxd.com">Letterboxd</a>, and <a
+                        href="https://netflix.com">Netflix</a>.</p>
+                <p>It is a project by John M. aka <a href="https://go.jm26.net/github">JMcrafter26</a>.</p>
+                <br>
+
+                <h2>Imprint</h2>
+                <p>John M. aka JMcrafter26</p>
+                <p>Stuttgart, Germany</p>
+                <p><span id="ofme4">-- -- -- -- @ ---- . ---</span></p>
+                <!-- I obfuscated my email address with a very simple JavaScript function :) -->
+
+                <h2>Important Information</h2>
+                <p>This website is not affiliated with IMDb, TMDb, Letterboxd, Netflix or any other movie library website. It uses TMDb API to get movie information and images.</p>
+
+                <h2>Privacy Policy</h2>
+                <p>This website does NOT collect and/or send any personal or device information back to the developer of
+                    the website. Your data is stored locally on your device. Your data will not be used in any way,
+                    because we simply won't have it.</p>
+
+                <h2>Warranty</h2>
+                <p>This website is provided "as is" and "as available" without any warranty of any kind. The developer
+                    of the website is not responsible for any possible damages, inconveniences, or other mishaps that
+                    occur as a result of the use of the website.</p>
             </div>
         </div>
-    </footer>
+    </div>
 
 
-    <script src="assets/js/loadjs.min.js"></script>
-    <script src="assets/js/init.js"></script>
+                <footer>
+                    <div class="container">
+                        <div class="social-link">
+                            <ul class="">
+                                <li><a href="https://go.jm26.net/jm"><i class="fas fa-globe"></i></a></li>
+                                <li><a href="https://github.com/JMcrafter26/JMovies"><i class="fab fa-github"></i></a>
+                                </li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="social-link">
+                            <ul class="d-flex list-none">
+                                <li><a href="./">Home</a></li>
+                                <li><a href="./about.html">About</a></li>
+                            </ul>
+                        </div>
+                        <div class="copyright">
+                            <p>© <span id="year"></span> JM26.NET</p>
+                            <p>Designed by John M. aka <a href="https://go.jm26.net/github">JMcrafter26</a>
+                        </div>
+                    </div>
+                </footer>
+
+
+                <script src="assets/js/loadjs.min.js"></script>
+                <script src="assets/js/init.js"></script>
 
 
 </body>
+
 </html>

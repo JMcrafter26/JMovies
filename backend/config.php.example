@@ -1,0 +1,17 @@
+<?php
+
+$TMDB_API_KEY = 'YOUR_READ_API_KEY_HERE'; // https://www.themoviedb.org/documentation/api
+
+$TMDB = array(
+    'api_key' => $TMDB_API_KEY,
+    'api_url' => 'https://api.themoviedb.org/3/',
+    'image_url' => 'https://image.tmdb.org/t/p/',
+    'language' => 'en-US',
+    'region' => 'US',
+    'include_adult' => 'false',
+    'include_video' => 'false',
+    'sort_by' => 'popularity.desc',
+    'page' => '1',
+    'api_key_header' => 'Authorization: Bearer ' . $TMDB_API_KEY,
+    'accept_header' => 'accept: application/json',
+);
