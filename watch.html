@@ -6,13 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies Library</title>
-        <link rel="stylesheet" href="assets/css/bootswatch/dist/cyborg/bootstrap.min.css">
+    <script>
+        let startTimestamp = Date.now();
+    </script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"> <!-- Customized Bootswatch theme (not the regular one) -->
 
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
+    <input type="hidden" id="pageName" value="watch">
     <!-- navbar with logo and search icon which expands to search bar on click -->
     <nav class="navbar watch-navbar navbar-expand-lg ">
         <div class="container container-fluid">
@@ -24,7 +29,8 @@
             <!-- right side buttons -->
             <div class="d-flex ">
                 <form class="d-none d-lg-flex d-md-flex input-group">
-                    <input class="form-control form-control-outline-primary" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-outline-primary" type="search" placeholder="Search"
+                        aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <button class="btn btn-outline-primary d-block d-lg-none d-md-none"><i
@@ -51,14 +57,12 @@
     </div>
 
     <style>
-       
-
         .ad-banner {
             background: #fff;
             color: #000;
             display: none;
             opacity: 0;
-            
+
             /* at the top right corner */
             position: fixed;
             top: 10px;
@@ -126,15 +130,13 @@
             margin: 0;
             padding: 0;
         }
-
     </style>
 
     <!-- cheap ad banner like on some sketchy websites -->
     <div class="ad-banner">
-        <button
-            onclick="document.querySelector('.ad-banner').style.display = 'none'">X</button>
-        <div class="ad-content"  onclick="window.location.href = 'https://www.google.com'">
-            
+        <button onclick="document.querySelector('.ad-banner').style.display = 'none'">X</button>
+        <div class="ad-content" onclick="window.location.href = 'https://www.google.com'">
+
             <h1>🔥Akustik Fabian 2km away from you</h1>
             <p>Click here to meet him (Schwul und geil)</p>
         </div>
@@ -165,210 +167,516 @@
     </div> -->
 
     <style>
-        .banner{
-	position:relative;
-	width:100%;
-	min-height:100vh;
-	padding:0 100px;
-	display:flex;
-	justify-content:flex-start;
-	align-items:center;
-}
+        .banner {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 100px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-.banner .bg{
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	object-fit:cover;
-}
+        .banner .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.content{
-	position:relative;
-	z-index:1;
-	max-width:550px;
-}
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 550px;
+        }
 
-.movieTitle{
-	max-width:250px;
-    border-radius: 15px;
-    height: 250px;
-    margin-bottom: 20px;
-}
+        .movieTitle {
+            max-width: 250px;
+            border-radius: 15px;
+            height: 250px;
+            margin-bottom: 20px;
+        }
 
-.banner .content h4{
-	color: rgba(255,255,255,0.5);
-	font-weight:500;
-}
+        .banner .content h4 {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+        }
 
-.banner .content h4 span{
-	padding:0 10px;
-	border-right:1px solid rgba(255,255,255,0.5);
-}
+        .banner .content h4 span {
+            padding: 0 10px;
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
+        }
 
-.banner .content h4 span:first-child{
-	padding-left:0;
-}
+        .banner .content h4 span:first-child {
+            padding-left: 0;
+        }
 
-.banner .content h4 span:last-child{
-	border-right:none;
-}
+        .banner .content h4 span:last-child {
+            border-right: none;
+        }
 
-.banner .content h4 span i {
-	background: var(--bs-primary);
-	color:#fff;
-	padding:0 8px;
-	display:inline-block;
-	font-style:normal;
-	border-radius:4px;
-}
+        .banner .content h4 span i {
+            background: var(--bs-primary);
+            color: #fff;
+            padding: 0 8px;
+            display: inline-block;
+            font-style: normal;
+            border-radius: 4px;
+        }
 
-.banner .content p {
-	font-size:1em;
-	font-weight:300;
-	line-height:1.5em;
-	color: #fff;
-	margin: 10px 0 20px;
-}
-
-
+        .banner .content p {
+            font-size: 1em;
+            font-weight: 300;
+            line-height: 1.5em;
+            color: #fff;
+            margin: 10px 0 20px;
+        }
 
 
-.play{
-	position:absolute;
-	bottom:50px;
-	left:100px;
-	display:inline-flex;
-	justify-content:flex-start;
-	align-items:center;
-	color:#fff;
-	text-transform:uppercase;
-	font-weight:500;
-	text-decoration:none;
-	letter-spacing:1px;
-	font-size:1.2em;
-	cursor:pointer;
-}
 
-.play img{
-	margin-right:10px;
-	max-width:50px;
-}
 
-.trailer{
-	position:fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	z-index: 100000;
-	width: 100%;
-	height:100%;
-	display: flex;
-	justify-content:center;
-	align-items:center;
-	backdrop-filter:blur(20px);
-	visibility:hidden;
-	opacity:0;
-}
+        .play {
+            position: absolute;
+            bottom: 50px;
+            left: 100px;
+            display: inline-flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
 
-.trailer.active{
-	visibility:visible;
-	opacity:1;
-}
+        .play img {
+            margin-right: 10px;
+            max-width: 50px;
+        }
 
-.trailer video{
-	max-width:900px;
-	outline:none;
-	
-}
+        .trailer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100000;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            visibility: hidden;
+            opacity: 0;
+        }
 
-.close{
-	position:absolute;
-	top: 30px;
-	right: 30px;
-	cursor:pointer;
-	filter:invert(1);
-	max-width:32px;
-}
+        .trailer.active {
+            visibility: visible;
+            opacity: 1;
+        }
 
-@media (max-width: 1024px){
-	.navigation li{
-		margin: 0 4px;
-	}
-	.banner{
-		padding: 100px 100px;
-	}
-	.banner .play{
-		bottom:40px;
-	}
-}
+        .trailer video {
+            max-width: 900px;
+            outline: none;
 
-@media (max-width: 991px){
-	header{
-		padding:20px 50px;
-		flex-direction:column;
-	}
-	.banner{
-		padding:100px 50px;
-	}
-	.banner .play{
-		left:50px;
-		font-size:1em;
-	}
-	.play img{
-		margin-right:10px;
-		max-width:40px;
-	}
-	.trailer video{
-		max-width:90%;
-	}
-}
+        }
 
-@media (max-width: 768px){
-	.banner {
-    padding: 170px 50px;
-	}
-	.banner .play{
-		bottom: 110px;
-	}
-}
+        .close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            cursor: pointer;
+            filter: invert(1);
+            max-width: 32px;
+        }
 
-@media (max-width: 600px){
+        @media (max-width: 1024px) {
+            .navigation li {
+                margin: 0 4px;
+            }
 
-	.banner{
-		padding:220px 20px 120px;
-	}
-	.banner .play{
-		left:20px;
-		bottom:30px;
-	}
-	.close{
-		max-width:20px;
-	}
-}
+            .banner {
+                padding: 100px 100px;
+            }
+
+            .banner .play {
+                bottom: 40px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            header {
+                padding: 20px 50px;
+                flex-direction: column;
+            }
+
+            .banner {
+                padding: 100px 50px;
+            }
+
+            .banner .play {
+                left: 50px;
+                font-size: 1em;
+            }
+
+            .play img {
+                margin-right: 10px;
+                max-width: 40px;
+            }
+
+            .trailer video {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .banner {
+                padding: 170px 50px;
+            }
+
+            .banner .play {
+                bottom: 110px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .banner {
+                padding: 220px 20px 120px;
+            }
+
+            .banner .play {
+                left: 20px;
+                bottom: 30px;
+            }
+
+            .close {
+                max-width: 20px;
+            }
+        }
     </style>
 
     <div class="banner">
         <img src="./assets/image/7bdh8bG.jpg" class="bg" alt="bg img">
         <div class="content">
-            <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg" alt="movie name" class="movieTitle">
+            <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                alt="movie name" class="movieTitle">
             <h4>
                 <span>2020</span>
                 <span><i>+13</i></span>
                 <span>1h 55min</span>
                 <span>Action</span>
             </h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur aliquam tenetur quasi ea recusandae, facere eum ipsa perferendis accusantium quas harum eius, ex quia quisquam nulla. Officia dolorem repudiandae voluptatum.</p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur aliquam tenetur quasi ea
+                recusandae, facere eum ipsa perferendis accusantium quas harum eius, ex quia quisquam nulla. Officia
+                dolorem repudiandae voluptatum.</p>
             <div class="">
                 <a href="#" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play</a>
                 <a href="#" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> My List</a>
             </div>
         </div>
-        <a class="play">
+        <a class="play" id="playTrailer">
             <i class="fa-solid fa-play me-2"></i>
             Watch Trailer</a>
     </div>
 
-    <br>
-    lol
+    <div class="text-center mt-3 mb-3">
+        <button class="btn btn-link text-decoration-none active" id="recommendedBtn">Recommended</button>
+        <button class="btn btn-link text-decoration-none" id="detailsBtn">Details</button>
+    </div>
+
+    <div class="trailer">
+        <video src="assets/video/trailer.mp4" controls></video>
+        <span class="btn close" id="closeTrailer"><i class="fas fa-times"></i></span>
+    </div>
+
+
+
+<div id="recommended-movies-container" class="d-block">
+    <h2 class="mt-5 m-4 mb-0">Recommended Movies</h2>
+
+    <!-- Featured Movies swiper in freemode, with smaller cards, with only movie poster and title -->
+    <div class="swiper m-2 p-2" id="recommended-movies">
+        <div class="swiper-wrapper">
+            <!-- make a new movie swiper (leave the old one at the top as it is and the css with it) with smaller cards like the netflix popular movies, with multiple slides on one page. there should not be a banner, only movie poster and title, rating and watch now button. the title and details should be at the bottom with a gradient overlay. to avoid any errors give the custom css a new class name like trending-slide -->
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trending-slide swiper-slide">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzIwNGY4YzItNWQ3ZS00ZmUwLTg3NTUtZmZkMWNlNGQ0Y2I2XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_QL75_UX280_CR0,0,280,414_.jpg"
+                    alt="Movie Poster" class="movie-slide-poster">
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+                <div class="trending-content">
+
+                    <div class="trending-slide-rating d-flex justify-content-between">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span>
+                            <i class="fas fa-clock"></i>
+                            <span class="rating-value">2h 30m</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary">Watch</button>
+                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper-pagination" id="recommended-movies-pagination"></div>
+
+        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="recommended-movies-prev"></div>
+        <div class="swiper-button-next d-none d-lg-block d-md-block" id="recommended-movies-next"></div>
+    </div>
+</div>
+<div id="details-movies-container" class="d-none">
+    <h2 class="mt-5 m-4 mb-0">Details</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Movie Title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod
+                            voluptates. Quisquam, quod voluptates.</p>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod
+                            voluptates. Quisquam, quod voluptates.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+    <script src="assets/js/loadjs.min.js"></script>
+    <script src="assets/js/init.js"></script>
+
+    <script>
+    </script>
