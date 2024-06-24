@@ -556,6 +556,14 @@
                     movieSlide.addEventListener('mouseout', () => {
                         movieSlide.querySelector('.trending-hover-title').style.opacity = 0;
                     });
+
+                    // add mobile touch event
+                    movieSlide.addEventListener('touchstart', () => {
+                        movieSlide.querySelector('.trending-hover-title').style.opacity = 1;
+                    });
+                    movieSlide.addEventListener('touchend', () => {
+                        movieSlide.querySelector('.trending-hover-title').style.opacity = 0;
+                    });
                 });
             });
         }
