@@ -36,7 +36,8 @@ I wanted to keep things simple, so I chose to use the following technologies:
 
 #### Frontend
 
-- **Bootstrap**: CSS framework
+- **Bootswatch**: Bootstrap theme
+  - **Bootstrap**: CSS framework
 - **jQuery**: JavaScript library
 - **Swiper**: JavaScript slider library
 - **FontAwesome**: Icon library
@@ -55,6 +56,14 @@ I wanted to keep things simple, so I chose to use the following technologies:
 4. Start a PHP server (`php -S localhost:8000`)
 5. Open the browser and go to `http://localhost:8000`. Done :tada:
 
-## License
+## License and Credits
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+- **Logo**: [Icons8](https://icons8.com/)
+- **API**: [The Movie Database (TMDb)](https://www.themoviedb.org/)
+- **Inspiration**: [IMDb](https://www.imdb.com/), [Letterboxd](https://letterboxd.com/)
+- **Icons**: [FontAwesome](https://fontawesome.com/), [Icons8](https://icons8.com/)
+- **Slider**: [Swiper](https://swiperjs.com/)
+- **CSS Framework**: [Bootstrap](https://getbootstrap.com/)
+- **JavaScript Library**: [jQuery](https://jquery.com/)
