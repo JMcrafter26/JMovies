@@ -6,8 +6,6 @@ This repo is for my school project. It is a movie library that allows users to s
 
 It's mainly inspired by the [IMDb](https://www.imdb.com/) and [Letterboxd](https://letterboxd.com/) websites.
 
-[![wakatime](https://wakatime.com/badge/github/JMcrafter26/movie-library.svg)](https://wakatime.com/badge/github/JMcrafter26/movie-library)
-
 > :warning: **This project is still in development. Things may change. Also, some features are not implemented yet and cleanup is needed.**
 > **This project is for educational purposes only and not affiliated with IMDb or Letterboxd or anything else.**
 
