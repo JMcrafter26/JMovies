@@ -6,6 +6,10 @@ const logger = new Logger({
   // style: "maxi" // The style of the logger (auto, maxi)
 });
 
+function getBackendUrl() {
+  return window.backendUrl;
+}
+
 
 function setLocalStorage(key, value) {
   // check if localStorage jmovies key exists
@@ -54,3 +58,15 @@ function hash(str, seed = 0) {
 
   return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 };
+
+function getUrlParams() {
+  let params = {};
+  window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+      params[key] = value;
+  });
+  return params;
+}
+
+function getParamByName(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}

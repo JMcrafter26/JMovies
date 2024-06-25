@@ -56,115 +56,6 @@
         </div>
     </div>
 
-    <style>
-        .ad-banner {
-            background: #fff;
-            color: #000;
-            display: none;
-            opacity: 0;
-
-            /* at the top right corner */
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            padding: 20px;
-            width: 70%;
-            max-width: 450px;
-            height: 100px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s;
-        }
-
-        .ad-banner-show {
-            display: block;
-            opacity: 1;
-            transition: all 0.5s;
-            animation: slideIn 0.5s;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        .ad-banner button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            border: none;
-            background: none;
-            font-size: 1.5rem;
-            color: #000;
-            z-index: 1001;
-        }
-
-        .ad-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding-top: 10px;
-            padding-bottom: 25px;
-            padding-right: 10px;
-        }
-
-        .ad-banner h1 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #000;
-            margin: 0;
-            padding: 0;
-        }
-
-        .ad-banner p {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #000;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-
-    <!-- cheap ad banner like on some sketchy websites -->
-    <div class="ad-banner">
-        <button onclick="document.querySelector('.ad-banner').style.display = 'none'">X</button>
-        <div class="ad-content" onclick="window.location.href = 'https://www.google.com'">
-
-            <h1>🔥Akustik Fabian 2km away from you</h1>
-            <p>Click here to meet him (Schwul und geil)</p>
-        </div>
-    </div>
-
-    <script>
-        setTimeout(() => {
-            // document.querySelector('.ad-banner').classList.add('ad-banner-show');
-        }, 5000);
-    </script>
-
-    <!-- Watch Page -->
-    <!-- Video trailer as background and with text and information
-    about the movie -->
-    <!-- <div class="watch-title-container">
-        <div class="row">
-            <div class="col-12">
-                <div class="watch-container">
-                    <video class="watch-video" src="assets/video/trailer.mp4" controls></video>
-                    <div class="watch-info">
-                        <h1 class="watch-title">Movie Title</h1>
-                        <p class="watch-description">Movie Description</p>
-                        <button class="btn btn-primary">Watch Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <style>
         .banner {
@@ -193,11 +84,18 @@
             max-width: 550px;
         }
 
-        .movieTitle {
+        .movieTitleImg {
             max-width: 250px;
             border-radius: 15px;
             height: 250px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .movieTitle {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
         }
 
         .banner .content h4 {
@@ -359,29 +257,34 @@
                 max-width: 20px;
             }
         }
+        #details-movie .fw-bold {
+                    margin-bottom: 0;
+                }
     </style>
 
-    <div class="banner">
+    <div class="banner placeholder-glow">
         <!-- <img src="./assets/image/7bdh8bG.jpg" class="bg" alt="bg img"> -->
-        <img src="./assets/image/banner_placeholder.png" class="bg" alt="bg img">
+        <img src="./assets/image/banner_placeholder.png" class="bg" alt="bg img" id="watch-banner">
         <div class="content">
             <img src="assets/image/label_poster_placeholder.png"
-                alt="movie name" class="movieTitle">
-            <h4>
-                <span>2020</span>
-                <span><i>+13</i></span>
-                <span>1h 55min</span>
-                <span>Action</span>
+                alt="movie name" class="movieTitleImg" id="watch-poster">
+                <br>
+                <h2 id="watch-title"><span class="placeholder">Some Movie Title</span></h2>
+
+            <h4 id="movie-banner-details">
+                <span id="watch-release-year"><span class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+                <span><i id="watch-age-rating" class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></span>
+                <span id="watch-duration"><span class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+                <span id="watch-genre"><span class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
             </h4>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur aliquam tenetur quasi ea
-                recusandae, facere eum ipsa perferendis accusantium quas harum eius, ex quia quisquam nulla. Officia
-                dolorem repudiandae voluptatum.</p>
+            <p id="watch-short-description"><span class="placeholder">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, nam natus aliquam ab at incidunt esse quos aliquid. At esse vero necessitatibus repellendus laboriosam architecto nam corrupti ipsum quam nostrum.
+                </span></p>
             <div class="">
-                <a href="#" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play</a>
-                <a href="#" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> My List</a>
+                <a href="#" id="watch-watchBtn" class="btn btn-primary placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <!-- <i class="fa-solid fa-play"></i> Watch -->
+                <a href="#" id="watch-watchlistBtn" class="btn btn-secondary placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </div>
         </div>
-        <a class="play" id="playTrailer">
+        <a class="play d-none" id="playTrailer">
             <i class="fa-solid fa-play me-2"></i>
             Watch Trailer</a>
     </div>
@@ -392,293 +295,337 @@
     </div>
 
     <div class="trailer">
-        <video src="assets/video/trailer.mp4" controls></video>
+        <video src="assets/video/trailer.mp4" controls id="watch-trailer"></video>
         <span class="btn close" id="closeTrailer"><i class="fas fa-times"></i></span>
     </div>
 
 
 
 <div id="recommended-movies-container" class="d-block">
-    <h2 class="mt-5 m-4 mb-0">Recommended Movies</h2>
+    <h2 class="mt-5 m-4 mb-0">Recommended</h2>
 
     <!-- Featured Movies swiper in freemode, with smaller cards, with only movie poster and title -->
-    <div class="swiper m-2 p-2" id="recommended-movies">
-        <div class="swiper-wrapper">
-            <!-- make a new movie swiper (leave the old one at the top as it is and the css with it) with smaller cards like the netflix popular movies, with multiple slides on one page. there should not be a banner, only movie poster and title, rating and watch now button. the title and details should be at the bottom with a gradient overlay. to avoid any errors give the custom css a new class name like trending-slide -->
-            <div class="trending-slide swiper-slide">
+    <div class="swiper m-2 p-2" id="watch-recommended">
+        <div class="swiper-wrapper" id="watch-recommended-wrapper">
+
+
+            <div class="trending-slide swiper-slide placeholder-glow">
+
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
+
+                <div class="trending-shadow"></div>
+                <div class="trending-shadow2"></div>
+
+
+                <div class="trending-content">
+                    <div class="trending-slide-rating d-flex justify-content-between">
+
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">8.5</span>
+                        </span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
+                        </span>
+                    </div>
+                    <div class="trending-slide-actions">
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+
+
+            </script>
+
+            <div class="trending-slide swiper-slide placeholder-glow">
+                <img src="assets/image/poster_placeholder.png"
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
-
-            <div class="trending-slide swiper-slide">
+            <div class="trending-slide swiper-slide placeholder-glow">
                 <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
+                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
                 <div class="trending-shadow"></div>
                 <div class="trending-shadow2"></div>
                 <div class="trending-content">
 
                     <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
                             <span class="rating-value">8.5</span>
                         </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
+                        <span class="placeholder">
+                            <span class="rating-value">W</span>
+                            <span class="rating-value">2024</span>
                         </span>
                     </div>
                     <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-primary placeholder"></button>
+                        <button class="btn btn-secondary placeholder"></button>
                     </div>
                 </div>
             </div>
 
-            <div class="trending-slide swiper-slide">
-                <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster">
-                <div class="trending-shadow"></div>
-                <div class="trending-shadow2"></div>
-                <div class="trending-content">
-
-                    <div class="trending-slide-rating d-flex justify-content-between">
-                        <span>
-                            <i class="fas fa-star"></i>
-                            <span class="rating-value">8.5</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-clock"></i>
-                            <span class="rating-value">2h 30m</span>
-                        </span>
-                    </div>
-                    <div class="trending-slide-actions">
-                        <button class="btn btn-primary">Watch</button>
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div class="swiper-pagination" id="recommended-movies-pagination"></div>
+        <div class="swiper-pagination" id="watch-recommended-pagination"></div>
 
-        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="recommended-movies-prev"></div>
-        <div class="swiper-button-next d-none d-lg-block d-md-block" id="recommended-movies-next"></div>
+        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="watch-recommended-prev"></div>
+        <div class="swiper-button-next d-none d-lg-block d-md-block" id="watch-recommended-next"></div>
     </div>
 </div>
+
 <div id="details-movies-container" class="d-none">
     <h2 class="mt-5 m-4 mb-0">Details</h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Movie Title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod
-                            voluptates. Quisquam, quod voluptates.</p>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod
-                            voluptates. Quisquam, quod voluptates.</p>
-                    </div>
-                </div>
-            </div>
+    <div class="container m-4" style="max-width: 75%;">
+        <div class="row placeholder-glow" id="details-movie">
+            <p class="fw-bold mt-3">Original Title:</p>
+            <p id="watch-original-title"><span class="placeholder">Some Movie Title</span>
+            <p class="fw-bold">Tagline:</p>
+            <p id="watch-tagline"><span class="placeholder">Some Tagline</span></p>
+            <p class="fw-bold">Description:</p>
+            <p id="watch-description"><span class="placeholder w-100">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur aliquam tenetur quasi ea recusandae, facere eum ipsa perferendis accusantium quas harum eius, ex quia quisquam nulla. Officia dolorem repudiandae voluptatum.</span></p>
+            <p class="fw-bold">Release Date:</p>
+            <p id="watch-release-date"><span class="placeholder">10 October 2020</span></p>
+            <p class="fw-bold">Rating:</p>
+            <p id="watch-rating"><span class="placeholder"><i class="fas fa-star"></i>  8.5</span></p>
+            <p class="fw-bold">Duration:</p>
+            <p id="watch-runtime"><span class="placeholder">2h 30m</span></p>
+            <p class="fw-bold">Genres:</p>
+            <p id="watch-genres"><span class="placeholder">Action, Adventure, Comedy</span></p>
+            <p class="fw-bold">Cast:</p>
+            <p id="watch-cast"><span class="placeholder">John Doe, Jane Doe, Jack Doe, John M, Jane M, Jack M</span></p>
+            <p class="fw-bold">Crew:</p>
+            <p id="watch-crew"><span class="placeholder">John Doe</span></p>
+            <p class="fw-bold">Production:</p>
+            <p id="watch-production"><span class="placeholder">Company Name</span></p>
+            <p class="fw-bold">Origin Country:</p>
+            <p id="watch-country"><span class="placeholder">United States</span></p>
+            <p class="fw-bold">More Information:</p>
+            <p id="watch-more-info"><a class="placeholder">https://www.imdb.com/title/tt1234567/</a><br><a class="placeholder">https://themovieswebsite.com/movie-title</a></p>
         </div>
     </div>
 </div>
 
+<br>
+
+<footer>
+    <div class="container">
+        <div class="social-link">
+            <ul class="">
+                <li><a href="https://go.jm26.net/jm"><i class="fas fa-globe"></i></a></li>
+                <li><a href="https://github.com/JMcrafter26/JMovies"><i class="fab fa-github"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="social-link">
+            <ul class="d-flex list-none">
+                <li><a href="./">Home</a></li>
+                <li><a href="./about.html">About</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            <p>© <span id="year"></span> JM26.NET</p>
+            <p>Designed by John M. aka <a href="https://go.jm26.net/github">JMcrafter26</a>
+        </div>
+    </div>
+</footer>
 
 
+<script src="assets/js/loadjs.min.js"></script>
+<script src="assets/js/init.js"></script>
+
+<script>
+function watchInit() {
+    let watchId = getParameterByName('id');
+}
+</script>
 
 
-
-
-    <script src="assets/js/loadjs.min.js"></script>
-    <script src="assets/js/init.js"></script>
-
-    <script>
-    </script>
+</body>
+</html>

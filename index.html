@@ -107,7 +107,8 @@
     <div class="page-loader">
         <div class="page-loader-content">
             <img src="assets/image/popcorn_128.png" alt="Logo" class="page-loader-animation">
-            <p class="page-loader-issues">This is taking longer than usual...</p>
+            <p class="page-loader-issues" id="pageLoaderIssue1">This is taking longer than usual. Is your internet connection stable?</p>
+            <p class="page-loader-issues" id="pageLoaderIssue2">Hmm... Something seems to be wrong. Please try refreshing the page.</p>
         </div>
     </div>
 
@@ -140,8 +141,16 @@
         
         // remove class hidden from page-loader-issues after 3 seconds
         setTimeout(() => {
-            document.querySelector('.page-loader-issues').classList.add('page-loader-fade-in');
-        }, 7000);
+            if(document.getElementById('pageLoaderIssue1')) {
+                document.getElementById('pageLoaderIssue1').classList.add('page-loader-fade-in');
+            }
+        }, 6000);
+
+        setTimeout(() => {
+            if(document.getElementById('pageLoaderIssue2')) {
+                document.getElementById('pageLoaderIssue2').classList.add('page-loader-fade-in');
+            }
+        }, 20000);
     </script>
 
     <!-- navbar with logo and search icon which expands to search bar on click -->
@@ -183,32 +192,8 @@
     </div>
 
     <div class="swiper" id="featured-movies">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="movie-slide">
-                    <div class="movie-slide-bg"
-                        style="background-image: url('assets/image/banner_placeholder.png');">
-                    </div>
-                    <div class="movie-slide-gradient">
-                        <div class="movie-slide-content">
-                            <img src="assets/image/label_poster_placeholder.png"
-                                alt="Movie Poster" class="movie-slide-poster">
-                            <div class="movie-slide-details">
-                                <h3 class="movie-slide-title">Movie Title</h3>
-                                <p class="movie-slide-description">Short description of the movie</p>
-                                <div class="movie-slide-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span class="rating-value">8.5</span>
-                                </div>
-                                <div class="movie-slide-actions">
-                                    <a class="btn btn-primary" href="watch.html">Watch</a>
-                                    <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="swiper-wrapper" id="featured-movies-wrapper">
+    
 
             <div class="swiper-slide">
                 <div class="movie-slide">
@@ -216,19 +201,18 @@
                         style="background-image: url('assets/image/banner_placeholder.png');">
                     </div>
                     <div class="movie-slide-gradient">
-                        <div class="movie-slide-content">
+                        <div class="movie-slide-content placeholder-glow">
                             <img src="assets/image/label_poster_placeholder.png"
                                 alt="Movie Poster" class="movie-slide-poster">
                             <div class="movie-slide-details">
-                                <h3 class="movie-slide-title">Movie Title</h3>
-                                <p class="movie-slide-description">Short description of the movie</p>
+                                <h3 class="movie-slide-title placeholder">Some Movie Title</h3>
+                                <p class="movie-slide-description placeholder">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis enim rerum provident maxime...</p>
                                 <div class="movie-slide-rating">
-                                    <i class="fas fa-star"></i>
-                                    <span class="rating-value">8.5</span>
+                                    <span class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 </div>
                                 <div class="movie-slide-actions">
-                                    <a class="btn btn-primary" href="watch.html">Watch</a>
-                                    <button class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                                    <a href="#" class="btn btn-primary placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <!-- <i class="fa-solid fa-play"></i> Watch -->
+                                    <a href="#" class="btn btn-secondary placeholder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>                    
                                 </div>
                             </div>
                         </div>
@@ -748,8 +732,8 @@
     </div>
 
     <!-- Popular Actors -->
-    <h2 class="mt-5 m-4 mb-0">Popular Actors</h2>
-    <div class="swiper m-2" id="popular-actors">
+    <h2 class="mt-5 m-4 mb-0 d-none">Popular Actors</h2>
+    <div class="swiper m-2 d-none" id="popular-actors">
         <div class="swiper-wrapper">
             <div class="swiper-slide actor-slide">
                 <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
