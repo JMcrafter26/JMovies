@@ -115,8 +115,8 @@ switch ($type) {
                 'external_ids' => $response['external_ids'],
             );
 
-            if($type == 'movie') {
-                $parsedResponse['runtime'] = $runtimeText;
+            if(strpos($type, 'movie') !== false) {
+                $parsedResponse['runtime'] = $response['runtime'];
                 $parsedResponse['title'] = $response['title'];
                 $parsedResponse['release_date'] = $response['release_date'];
                 $parsedResponse['year'] = substr($response['release_date'], 0, 4);
