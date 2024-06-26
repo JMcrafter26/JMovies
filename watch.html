@@ -169,28 +169,48 @@
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             visibility: hidden;
             opacity: 0;
         }
 
-        .trailer.active {
+        .trailer.active { 
             visibility: visible;
             opacity: 1;
         }
 
-        .trailer video {
-            max-width: 900px;
+        .trailer iframe {
+            /* max-width: 900px; */
+            /* width: 800px; */
+            /* height: 450px; */
+            width: 80vw;
+            height: 45vw;
             outline: none;
+            background-color: rgba(0, 0, 0, 0.8);
 
+            /* add shadow */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        .close {
+        .trailer .trailer-note {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        .trailer .close {
             position: absolute;
             top: 30px;
             right: 30px;
             cursor: pointer;
-            filter: invert(1);
+            /* filter: invert(1); */
+            color: #fff;
             max-width: 32px;
+            font-size: 1.5em;
         }
 
         @media (max-width: 1024px) {
@@ -253,7 +273,7 @@
                 bottom: 30px;
             }
 
-            .close {
+            .trailer .close {
                 max-width: 20px;
             }
         }
@@ -295,8 +315,19 @@
     </div>
 
     <div class="trailer">
-        <video src="assets/video/trailer.mp4" controls id="watch-trailer"></video>
+        <!-- <video src="assets/video/trailer.mp4" controls id="watch-trailer"></video> -->
+        <div class="plyr__video-embed" id="player">
+            <iframe
+              src=""
+              id="watch-trailer"  
+                allowfullscreen
+                allowtransparency            
+            ></iframe>
+          </div>
         <span class="btn close" id="closeTrailer"><i class="fas fa-times"></i></span>
+        <div class="trailer-note">
+            <p>This content is hosted on an external platform. We don't have any control over it.</p>
+        </div>
     </div>
 
 

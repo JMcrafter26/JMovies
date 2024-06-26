@@ -92,7 +92,8 @@ function pageInit() {
     }
   } else if (pageName === "watch") {
     if (!loadjs.isDefined("watch")) {
-      loadjs(["assets/js/watch.js"], "watch", function () {
+      // loadjs(["assets/css/plyr.css", "assets/js/plyr.js", "assets/js/watch.js"], "watch", function () {
+        loadjs(["assets/js/watch.js"], "watch", function () {
         logger.debug("Watch script loaded");
         watchInit();
       });

@@ -14,22 +14,27 @@ function watchInit() {
     window.location.hash = "watch";
   }
 
-
   //   EVENT LISTENERS
   // if the play button is clicked, show the trailer
   $("#playTrailer").click(function () {
     $(".trailer").addClass("active");
+    // set the src of the trailer to data-src
+    let src = $("#watch-trailer").attr("data-src");
+    $("#watch-trailer").attr("src", src);
   });
 
   // if the close button is clicked, hide the trailer
   $("#closeTrailer").click(function () {
     $(".trailer").removeClass("active");
+    // remove the src of the trailer
+    $("#watch-trailer").attr("src", "");
   });
 
   // if clicked outside the trailer, hide the trailer
   $(".trailer").click(function (e) {
     if ($(e.target).hasClass("trailer")) {
       $(".trailer").removeClass("active");
+      $("#watch-trailer").attr("src", "");
     }
   });
 
@@ -58,59 +63,63 @@ function watchInit() {
     window.location.hash = "details";
   });
 
+  let watchId = getParamByName("id");
+  // if id starts with s, it is a series, else it is a movie
+  let type;
+  if (watchId.startsWith("s")) {
+    type = "tv";
+  } else if (watchId.startsWith("m")) {
+    type = "movie";
+  } else {
+    logger.error("Invalid watchId");
+    invalidId("No type in id");
+    return;
+  }
+  window.type = type;
+
   getDetails();
   getRecommended();
 }
 
-
 function getDetails() {
-    let watchId = getParamByName("id");
-    // if id starts with s, it is a series, else it is a movie
-    let type;
-    if (watchId.startsWith("s")) {
-        type = "tv";
-    } else if (watchId.startsWith("m")) {
-        type = "movie";
-    } else {
-        logger.error("Invalid watchId");
-        invalidId("No type in id");
+  let watchId = getParamByName("id");
+  watchId = watchId.substring(1);
+
+  let type = window.type;
+
+
+  logger.info("Getting details for: " + watchId + " (" + type + ")");
+
+  // get the details from the backend
+  const backendUrl = window.backendUrl + `?type=${type}/${watchId}`;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", backendUrl, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      let data = JSON.parse(xhr.responseText);
+      logger.info("Details received", data);
+      console.log(data);
+      if (data.error) {
+        invalidId(data.error);
         return;
+      }
+      setDetails(data, type);
     }
-    
-    watchId = watchId.substring(1);
-
-    logger.info("Getting details for: " + watchId + " (" + type + ")");
-
-    // get the details from the backend
-    const backendUrl = window.backendUrl + `?type=${type}/${watchId}`;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", backendUrl, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            let data = JSON.parse(xhr.responseText);
-            logger.info("Details received", data);
-            console.log(data);
-            if (data.error) {
-                invalidId(data.error);
-                return;
-            }
-            setDetails(data, type);
-        }
-    };
-    xhr.send();
+  };
+  xhr.send();
 }
 
 function setDetails(data, type) {
-    // check if data is empty or length is less than 3
-    if (!data || data.length < 3) {
-        logger.error("No data received from the backend");
-        return;
-    }
+  // check if data is empty or length is less than 3
+  if (!data || data.length < 3) {
+    logger.error("No data received from the backend");
+    return;
+  }
 
-    // set the details
-    let details = data;
-    /* example response
+  // set the details
+  // let details = data;
+  /* example response
     {
         {
       "id": 1022789,
@@ -225,120 +234,246 @@ function setDetails(data, type) {
           }
       ]
     }
-*/
-    $("#watch-title").text(details.title);
-    $("#watch-poster").attr("src", details.poster);
-    $("#watch-banner").attr("src", details.banner);
-    $("#watch-release-year").text(details.year);
-    let shortDescription = details.description;
-    if (shortDescription.length > 100) {
-        shortDescription = shortDescription.substring(0, 100) + "...";
-    }
-    $("#watch-short-description").text(shortDescription);
-    $("#watch-age-rating").text(details.age_rating + "+");
-    // remove class placeholder from the age rating
-    $("#watch-age-rating").removeClass("placeholder");
-    // get the first genre
-    if (details.genres.length > 0) {
-        $("#watch-genre").text(details.genres[0].name);
+    */
+
+  let detailsTemplate = {
+    id: "-",
+    title: "-",
+    poster: "assets/img/placeholder.png",
+    banner: "assets/img/placeholder.png",
+    description: "Failed to load description",
+    genres: [],
+    release_date: "-",
+    rating: "-",
+    year: "-",
+    homepage: "",
+    original_country: "-",
+    original_language: "-",
+    original_title: "-",
+    production_companies: [],
+    runtime: "-",
+    runtime_text: "-",
+    status: "-",
+    tagline: "-",
+    external_ids: {
+      imdb_id: "",
+      wikidata_id: "",
+      facebook_id: "",
+      instagram_id: "",
+      twitter_id: "",
+    },
+    trailer: "",
+    trailerEmbed: "",
+    age_rating: "N/A",
+    cast: [],
+    crew: [],
+  };
+
+  // use the template and fill in the details, if the value is not available, use the default value
+  let details = {};
+  for (let key in detailsTemplate) {
+    if (key in data && data[key] != null && data[key] != "") {
+      details[key] = data[key];
     } else {
-        $("#watch-genre").text("-");
+      details[key] = detailsTemplate[key];
     }
-    $("#watch-duration").text(details.runtime_text);
-    $("#watch-trailer").attr("src", details.trailer);
+  }
+
+  $("#watch-title").text(details.title);
+  $("#watch-poster").attr("src", details.poster);
+  $("#watch-banner").attr("src", details.banner);
+  $("#watch-release-year").text(details.year);
+  let shortDescription = details.description;
+  if (shortDescription.length > 200) {
+    shortDescription = shortDescription.substring(0, 200) + "... <a class='text-body' href='#description' onclick='document.getElementById(\"detailsBtn\").click(); document.getElementById(\"details-movie\").scrollIntoView();' >Read more</a>";
+  }
+  $("#watch-short-description").html(shortDescription);
+  $("#watch-age-rating").text(details.age_rating + "+");
+  // remove class placeholder from the age rating
+  $("#watch-age-rating").removeClass("placeholder");
+  // get the first genre
+  if (details.genres.length > 0) {
+    $("#watch-genre").text(details.genres[0].name);
+  } else {
+    $("#watch-genre").text("-");
+  }
+  $("#watch-duration").text(details.runtime_text);
+  $("#watch-trailer").attr("data-src", details.trailerEmbed);
+  if (details.trailerEmbed != "" && details.trailerEmbed != "-") {
     $("#playTrailer").removeClass("d-none");
+  }
 
-    $("#watch-watchlistBtn").removeClass("placeholder");
-    $("#watch-watchlistBtn").attr("data-watchlistbtn", details.id);
-    $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
-    $("#watch-watchBtn").removeClass("placeholder");
-    $("#watch-watchBtn").html(`<i class="fas fa-play"></i> Watch`);
+  $("#watch-watchlistBtn").removeClass("placeholder");
+  $("#watch-watchlistBtn").attr("data-watchlistbtn", details.id);
+  $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
+  $("#watch-watchBtn").removeClass("placeholder");
+  $("#watch-watchBtn").html(`<i class="fas fa-play"></i> Watch`);
 
-
-    $("#watch-original-title").text(details.original_title);
-    $("#watch-tagline").text(details.tagline);
-    $("#watch-description").text(details.description);
-    $("#watch-release-date").text(details.release_date + " (" + details.status + " | " + details.original_country + ")");
-    $("#watch-rating").html(`<i class="fas fa-star"></i> ${details.rating}`);
-    $("#watch-runtime").text(details.runtime + " minutes (" + details.runtime_text + ")");
-    $("#watch-genres").text(details.genres.map(genre => genre.name).join(", "));
-    // crew, the name of the person and the job
-    if (details.crew > 0) {
-      $("#watch-crew").html(details.crew.map(crew => crew.name + " (" + crew.job + ")").join(", ") + " and more");
-    } else {
-      $("#watch-crew").text("-");
-    }
-    // cast, the name of the person and the character
-    $("#watch-cast").html(details.cast.map(cast => cast.name + " (" + cast.character + ")").join(", ") + " and more");
-    $("#watch-production").text(details.production_companies.map(company => company.name).join(", "));
-    $("#watch-country").text(details.original_country);
-    let moreInfo = "";
-    if (details.homepage) {
-        moreInfo += `<a href="${details.homepage}" target="_blank">Homepage</a>`;
-    }
-    if (details.external_ids.imdb_id) {
-        moreInfo += ` <a class="text-decoration-none" href="https://www.imdb.com/title/${details.external_ids.imdb_id}" target="_blank">IMDb</a> | `;
-    }
-    if (details.external_ids.wikidata_id) {
-        moreInfo += `<a class="text-decoration-none" href="https://www.wikidata.org/wiki/${details.external_ids.wikidata_id}" target="_blank">Wikidata</a> | `;
-    }
-    if (details.external_ids.facebook_id) {
-        moreInfo += `<a class="text-decoration-none" href="https://www.facebook.com/${details.external_ids.facebook_id}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a> | `;
-    }
-    if (details.external_ids.instagram_id) {
-        moreInfo += `<a class="text-decoration-none" href="https://www.instagram.com/${details.external_ids.instagram_id}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a> | `;
-    }
-    if (details.external_ids.twitter_id) {
-        moreInfo += `<a class="text-decoration-none" href="https://www.twitter.com/${details.external_ids.twitter_id}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>`;
-    }
-    // if moreInfo ends with a pipe, remove it
-    if (moreInfo.endsWith(" | ")) {
-        moreInfo = moreInfo.substring(0, moreInfo.length - 3);
-    }
-    $("#watch-more-info").html(moreInfo);
-
-
+  $("#watch-original-title").text(details.original_title);
+  $("#watch-tagline").text(details.tagline);
+  $("#watch-description").text(details.description);
+  $("#watch-release-date").text(
+    details.release_date +
+      " (" +
+      details.status +
+      " | " +
+      details.original_country +
+      ")"
+  );
+  $("#watch-rating").html(`<i class="fas fa-star"></i> ${details.rating}`);
+  $("#watch-runtime").text(
+    details.runtime + " minutes (" + details.runtime_text + ")"
+  );
+  $("#watch-genres").text(details.genres.map((genre) => genre.name).join(", "));
+  // crew, the name of the person and the job
+  if (details.crew.length > 0) {
+    $("#watch-crew").html(
+      details.crew.map((crew) => crew.name + " (" + crew.job + ")").join(", ") +
+        " and more"
+    );
+  } else {
+    $("#watch-crew").text("-");
+  }
+  // cast, the name of the person and the character
+  $("#watch-cast").html(
+    details.cast
+      .map((cast) => cast.name + " (" + cast.character + ")")
+      .join(", ") + " and more"
+  );
+  $("#watch-production").text(
+    details.production_companies.map((company) => company.name).join(", ")
+  );
+  $("#watch-country").text(details.original_country);
+  let moreInfo = "";
+  if (details.homepage) {
+    moreInfo += `<a class="text-decoration-none" href="${details.homepage}" target="_blank">Homepage</a> | `;
+  }
+  if (details.external_ids.imdb_id) {
+    moreInfo += ` <a class="text-decoration-none" href="https://www.imdb.com/title/${details.external_ids.imdb_id}" target="_blank">IMDb</a> | `;
+  }
+  if (details.external_ids.wikidata_id) {
+    moreInfo += `<a class="text-decoration-none" href="https://www.wikidata.org/wiki/${details.external_ids.wikidata_id}" target="_blank">Wikidata</a> | `;
+  }
+  if (details.external_ids.facebook_id) {
+    moreInfo += `<a class="text-decoration-none" href="https://www.facebook.com/${details.external_ids.facebook_id}" target="_blank"><i class="fab fa-facebook"></i> Facebook</a> | `;
+  }
+  if (details.external_ids.instagram_id) {
+    moreInfo += `<a class="text-decoration-none" href="https://www.instagram.com/${details.external_ids.instagram_id}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a> | `;
+  }
+  if (details.external_ids.twitter_id) {
+    moreInfo += `<a class="text-decoration-none" href="https://www.twitter.com/${details.external_ids.twitter_id}" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>`;
+  }
+  // if moreInfo ends with a pipe, remove it
+  if (moreInfo.endsWith(" | ")) {
+    moreInfo = moreInfo.substring(0, moreInfo.length - 3);
+  }
+  $("#watch-more-info").html(moreInfo);
 }
 
 function getRecommended() {
-    let watchId = getParamByName("id");
-    // if id starts with s, it is a series, else it is a movie
-    let type;
-    if (watchId.startsWith("s")) {
-        type = "tv";
-    } else if (watchId.startsWith("m")) {
-        type = "movie";
-    } else {
-        logger.error("Invalid watchId");
-        invalidId("No type in id");
+  let watchId = getParamByName("id");
+  // if id starts with s, it is a series, else it is a movie
+  let type;
+  if (watchId.startsWith("s")) {
+    type = "tv";
+  } else if (watchId.startsWith("m")) {
+    type = "movie";
+  } else {
+    logger.error("Invalid watchId");
+    invalidId("No type in id");
+    return;
+  }
+
+  watchId = watchId.substring(1);
+
+  logger.info("Getting recommended for: " + watchId + " (" + type + ")");
+
+  // get the details from the backend
+  const backendUrl = window.backendUrl + `?type=${type}/${watchId}/recommendations`;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", backendUrl, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      let data = JSON.parse(xhr.responseText);
+      logger.info("Recommended received", data);
+      console.log(data);
+      if (data.error) {
+        invalidId(data.error);
         return;
+      }
+      setRecommended(data, window.type);
+      const swiper = document.getElementById("watch-recommended").swiper;
+      swiper.updateSlides();
     }
-
-    watchId = watchId.substring(1);
-
-    logger.info("Getting recommended for: " + watchId + " (" + type + ")");
-
-    // get the details from the backend
-    const backendUrl = window.backendUrl + `?type=${type}/${watchId}/recommended`;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", backendUrl, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            let data = JSON.parse(xhr.responseText);
-            logger.info("Recommended received", data);
-            console.log(data);
-            if (data.error) {
-                invalidId(data.error);
-                return;
-            }
-            setRecommended(data);
-        }
-    };
-    xhr.send();
+  };
+  xhr.send();
 }
 
-function invalidId(message = '') {
-    // For now, just log it
-    logger.warn("An error occured: " + message);
+function setRecommended(data, type) {
+    let recommendationsWrapper = document.getElementById("watch-recommended-wrapper");
+    if (!data || data.length < 3) {
+      logger.error("No data received from the backend");
+      return;
+    }
+    recommendationsWrapper.innerHTML = "";
+    // loop through the data and set the recommended movies
+    data.forEach((movie) => {
+        const movieSlide = document.createElement("div");
+        movieSlide.classList.add("trending-slide", "swiper-slide");
+        let title = movie.title.replace(/ /g, "-");
+        let urlId = movie.id;
+        if (type === "tv") {
+          urlId = "s" + urlId;
+        } else {
+          urlId = "m" + urlId;
+        }
+        let url = `watch.html?id=${urlId}&${title}`;
+        movieSlide.innerHTML = `
+                                <img src="${movie.poster}" alt="Movie Poster" class="movie-slide-poster" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-hover-title">${movie.title}</div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span>
+                                            <i class="fas fa-star"></i>
+                                            <span class="rating-value">${movie.rating}</span>
+                                        </span>
+                                        <span>
+                                            <i class="fas fa-calendar"></i>
+                                            <span class="rating-value">${movie.year}</span>
+                                        </span>
+                                    </div>
+     
+    
+                                    <div class="trending-slide-actions">
+                                    <a class="btn btn-primary" href="${url}">Watch</a>
+                                    <a class="btn btn-secondary" data-watchlistbtn="${urlId}"><i class="fas fa-plus"></i></a>
+                                </div>
+                                </div>
+                            `;
+                            recommendationsWrapper.appendChild(movieSlide);
+    
+        // add event listener
+        movieSlide.addEventListener("mouseover", () => {
+          movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
+        });
+        movieSlide.addEventListener("mouseout", () => {
+          movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
+        });
+    
+        // add mobile touch event
+        movieSlide.addEventListener("touchstart", () => {
+          movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
+        });
+        movieSlide.addEventListener("touchend", () => {
+          movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
+        });
+});
+}
+
+function invalidId(message = "") {
+  // For now, just log it
+  logger.warn("An error occured: " + message);
 }
