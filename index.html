@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies Library</title>
+    <title>JMovies</title>
 
     <script>
         let startTimestamp = Date.now();
@@ -112,9 +112,6 @@
         </div>
     </div>
 
-
-
-    <!--Scripts-->
     <script>
         console.log('startTimestamp: ' + startTimestamp);
         // let loadedBefore = JSON.parse(localStorage.getItem('jmovies'))?.loadedBefore;
@@ -123,18 +120,18 @@
             // add class stopScrolling to body to prevent scrolling
 
             console.log('firstPage: ' + window.firstPage);
-            // {"count":7,"sum":2698,"mean":385.42857142857144} is inside localhost jmovies variable
-            let mean = JSON.parse(localStorage.getItem('jmovies'))?.averageLoadTime;
+            // {"count":7,"sum":2698,"averageLoadTime":385.42857142857144} is inside localhost jmovies variable
+            let averageLoadTime = JSON.parse(localStorage.getItem('jmovies'))?.averageLoadTime;
 
-            if (!mean) {
-                mean = 1600;
+            if (!averageLoadTime) {
+                averageLoadTime = 1600;
             } else {
-                mean = JSON.parse(mean).mean;
+                averageLoadTime = averageLoadTime.average;
             }
-            console.log('mean: ' + mean);
+            console.log('averageLoadTime: ' + averageLoadTime);
 
 
-        if (!window.firstPage && mean > 1500) {
+        if (!window.firstPage && averageLoadTime > 1500) {
             document.body.classList.add('stopScrolling');
             document.querySelector('.page-loader').style.display = 'flex';
         }
@@ -171,8 +168,8 @@
                 <button class="btn btn-outline-primary d-block d-lg-none d-md-none"><i
                         class="fas fa-search"></i></button>
                 <button class="btn btn-outline-primary mx-2"><i class="fas fa-user"></i></button>
-                <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#categories"><i
-                        class="fas fa-bars"></i></button>
+                <!-- <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#categories"><i
+                        class="fas fa-bars"></i></button> -->
             </div>
         </div>
     </nav>
@@ -731,133 +728,89 @@
         <div class="swiper-button-next d-none d-lg-block d-md-block" id="trending-series-next"></div>
     </div>
 
-    <!-- Popular Actors -->
-    <h2 class="mt-5 m-4 mb-0 d-none">Popular Actors</h2>
-    <div class="swiper m-2 d-none" id="popular-actors">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide actor-slide">
-                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
-                    class="actor-slide-poster">
-                <div class="actor-slide-content">
-                    <h3 class="actor-slide-title">Actor Name</h3>
-                    <h4 class="actor-slide-job">20y/o Actor</h4>
+    <div class="home-watchlist-container">
+        <h2 class="mt-5 m-4 mb-0">Your Watchlist <a href="watchlist.html"><i class="fas fa-arrow-right"></i></a></h2>
+        <div class="swiper m-2 p-2" id="home-watchlist">
+            <div class="swiper-wrapper" id="home-watchlist-wrapper">
+    
+                <div class="trending-slide swiper-slide placeholder-glow">
+                    <img src="assets/image/poster_placeholder.png" alt="Movie Poster" class="movie-slide-poster placeholder"
+                        loading="lazy">
+                    <div class="trending-shadow"></div>
+                    <div class="trending-shadow2"></div>
+                    <div class="trending-content">
+    
+                        <div class="trending-slide-rating d-flex justify-content-between">
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">8.5</span>
+                            </span>
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">2024</span>
+                            </span>
+                        </div>
+                        <div class="trending-slide-actions">
+                            <button class="btn btn-primary placeholder"></button>
+                            <button class="btn btn-secondary placeholder"></button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="swiper-slide actor-slide">
-                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
-                    class="actor-slide-poster">
-                <div class="actor-slide-content">
-                    <h3 class="actor-slide-title">Actor Name</h3>
-                    <h4 class="actor-slide-job">20y/o Actor</h4>
+    
+                <div class="trending-slide swiper-slide placeholder-glow">
+                    <img src="assets/image/poster_placeholder.png" alt="Movie Poster" class="movie-slide-poster placeholder"
+                        loading="lazy">
+                    <div class="trending-shadow"></div>
+                    <div class="trending-shadow2"></div>
+                    <div class="trending-content">
+    
+                        <div class="trending-slide-rating d-flex justify-content-between">
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">8.5</span>
+                            </span>
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">2024</span>
+                            </span>
+                        </div>
+                        <div class="trending-slide-actions">
+                            <button class="btn btn-primary placeholder"></button>
+                            <button class="btn btn-secondary placeholder"></button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="swiper-slide actor-slide">
-                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
-                    class="actor-slide-poster">
-                <div class="actor-slide-content">
-                    <h3 class="actor-slide-title">Actor Name</h3>
-                    <h4 class="actor-slide-job">20y/o Actor</h4>
+                <div class="trending-slide swiper-slide placeholder-glow">
+                    <img src="assets/image/poster_placeholder.png" alt="Movie Poster" class="movie-slide-poster placeholder"
+                        loading="lazy">
+                    <div class="trending-shadow"></div>
+                    <div class="trending-shadow2"></div>
+                    <div class="trending-content">
+    
+                        <div class="trending-slide-rating d-flex justify-content-between">
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">8.5</span>
+                            </span>
+                            <span class="placeholder">
+                                <span class="rating-value">W</span>
+                                <span class="rating-value">2024</span>
+                            </span>
+                        </div>
+                        <div class="trending-slide-actions">
+                            <button class="btn btn-primary placeholder"></button>
+                            <button class="btn btn-secondary placeholder"></button>
+                        </div>
+                    </div>
                 </div>
+    
             </div>
-
-            <div class="swiper-slide actor-slide">
-                <img src="https://image.tmdb.org/t/p/original/pviRYKEEmoPUfLYwP1VHJ6LQcRg.jpg" alt="Actor Poster"
-                    class="actor-slide-poster">
-                <div class="actor-slide-content">
-                    <h3 class="actor-slide-title">Actor Name</h3>
-                    <h4 class="actor-slide-job">20y/o Actor</h4>
-                </div>
-            </div>
-
+    
+            <div class="swiper-pagination" id="home-watchlist-pagination"></div>
+    
+            <div class="swiper-button-prev d-none d-lg-block d-md-block" id="home-watchlist-prev"></div>
+            <div class="swiper-button-next d-none d-lg-block d-md-block" id="home-watchlist-next"></div>
         </div>
-
-        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="popular-actors-prev"></div>
-        <div class="swiper-button-next d-none d-lg-block d-md-block" id="popular-actors-next"></div>
-    </div>
-
-    <h2 class="mt-5 m-4 mb-0">Your Watchlist <a href="watchlist.html"><i class="fas fa-arrow-right"></i></a></h2>
-    <div class="swiper m-2 p-2" id="watchlist">
-        <div class="swiper-wrapper" id="watchlist-wrapper">
-
-            <div class="trending-slide swiper-slide placeholder-glow">
-                <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
-                <div class="trending-shadow"></div>
-                <div class="trending-shadow2"></div>
-                <div class="trending-content">
-
-                    <div class="trending-slide-rating d-flex justify-content-between">
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">8.5</span>
-                        </span>
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">2024</span>
-                        </span>
-                    </div>
-                    <div class="trending-slide-actions">
-                        <button class="btn btn-primary placeholder"></button>
-                        <button class="btn btn-secondary placeholder"></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="trending-slide swiper-slide placeholder-glow">
-                <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
-                <div class="trending-shadow"></div>
-                <div class="trending-shadow2"></div>
-                <div class="trending-content">
-
-                    <div class="trending-slide-rating d-flex justify-content-between">
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">8.5</span>
-                        </span>
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">2024</span>
-                        </span>
-                    </div>
-                    <div class="trending-slide-actions">
-                        <button class="btn btn-primary placeholder"></button>
-                        <button class="btn btn-secondary placeholder"></button>
-                    </div>
-                </div>
-            </div>
-            <div class="trending-slide swiper-slide placeholder-glow">
-                <img src="assets/image/poster_placeholder.png"
-                    alt="Movie Poster" class="movie-slide-poster placeholder" loading="lazy">
-                <div class="trending-shadow"></div>
-                <div class="trending-shadow2"></div>
-                <div class="trending-content">
-
-                    <div class="trending-slide-rating d-flex justify-content-between">
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">8.5</span>
-                        </span>
-                        <span class="placeholder">
-                            <span class="rating-value">W</span>
-                            <span class="rating-value">2024</span>
-                        </span>
-                    </div>
-                    <div class="trending-slide-actions">
-                        <button class="btn btn-primary placeholder"></button>
-                        <button class="btn btn-secondary placeholder"></button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="swiper-pagination" id="watchlist-pagination"></div>
-
-        <div class="swiper-button-prev d-none d-lg-block d-md-block" id="watchlist-prev"></div>
-        <div class="swiper-button-next d-none d-lg-block d-md-block" id="watchlist-next"></div>
     </div>
 
     <br>

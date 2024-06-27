@@ -11,7 +11,10 @@ function watchInit() {
     // scroll to top
     window.scrollTo(0, 0);
     // set the hash to watch
-    window.location.hash = "watch";
+    let url = new URL(window.location.href);
+    url.hash = "#watch";
+    // push the new url with hash
+    window.history.replaceState({}, document.title, url);
   }
 
   //   EVENT LISTENERS
@@ -48,8 +51,8 @@ function watchInit() {
     // remove hash from the url
     let url = new URL(window.location.href);
     url.hash = "#watch";
-    // push the new url without hash
-    window.history.pushState({}, document.title, url);
+    // replace the new url without hash
+    window.history.replaceState({}, document.title, url);
   });
 
   // if the details button is clicked, show the details
@@ -59,8 +62,11 @@ function watchInit() {
     $("#details-movies-container").removeClass("d-none");
     $("#recommended-movies-container").addClass("d-none");
 
-    // add hash #details to the url
-    window.location.hash = "details";
+    // add hash #details to the url, but do not save it in the history
+    let url = new URL(window.location.href);
+    url.hash = "#details";
+    // push the new url with hash
+    window.history.replaceState({}, document.title, url);
   });
 
   let watchId = getParamByName("id");
@@ -76,6 +82,9 @@ function watchInit() {
     return;
   }
   window.type = type;
+  addToHistory(watchId);
+
+  watchId = watchId.substring(1);
 
   getDetails();
   getRecommended();
@@ -265,6 +274,7 @@ function setDetails(data, type) {
     trailer: "",
     trailerEmbed: "",
     age_rating: "N/A",
+    type: "",
     cast: [],
     crew: [],
   };
@@ -278,6 +288,9 @@ function setDetails(data, type) {
       details[key] = detailsTemplate[key];
     }
   }
+
+  // set page title
+  document.title = details.title + " - JMovies";
 
   $("#watch-title").text(details.title);
   $("#watch-poster").attr("src", details.poster);
@@ -304,8 +317,17 @@ function setDetails(data, type) {
   }
 
   $("#watch-watchlistBtn").removeClass("placeholder");
-  $("#watch-watchlistBtn").attr("data-watchlistbtn", details.id);
-  $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
+  if (details.type === "tv") {
+    $("#watch-watchlistBtn").attr("data-watchlistbtn", "s" + details.id);
+  } else {
+    $("#watch-watchlistBtn").attr("data-watchlistbtn", "m" + details.id);
+  }
+  if(isInWatchlist($("#watch-watchlistBtn").attr("data-watchlistbtn"))) {
+    $("#watch-watchlistBtn").html(`<i class="fas fa-check"></i> Watchlist`);
+  } else {
+    $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
+  }
+  // $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
   $("#watch-watchBtn").removeClass("placeholder");
   $("#watch-watchBtn").html(`<i class="fas fa-play"></i> Watch`);
 
@@ -402,76 +424,80 @@ function getRecommended() {
         invalidId(data.error);
         return;
       }
-      setRecommended(data, window.type);
+      // setRecommended(data, window.type);
+      // insertIntoSwiper(wrapperId, type, data) 
+      insertIntoSwiper("watch-recommended-wrapper", window.type, data);
       const swiper = document.getElementById("watch-recommended").swiper;
       swiper.updateSlides();
+
+
     }
   };
   xhr.send();
 }
 
-function setRecommended(data, type) {
-    let recommendationsWrapper = document.getElementById("watch-recommended-wrapper");
-    if (!data || data.length < 3) {
-      logger.error("No data received from the backend");
-      return;
-    }
-    recommendationsWrapper.innerHTML = "";
-    // loop through the data and set the recommended movies
-    data.forEach((movie) => {
-        const movieSlide = document.createElement("div");
-        movieSlide.classList.add("trending-slide", "swiper-slide");
-        let title = movie.title.replace(/ /g, "-");
-        let urlId = movie.id;
-        if (type === "tv") {
-          urlId = "s" + urlId;
-        } else {
-          urlId = "m" + urlId;
-        }
-        let url = `watch.html?id=${urlId}&${title}`;
-        movieSlide.innerHTML = `
-                                <img src="${movie.poster}" alt="Movie Poster" class="movie-slide-poster" loading="lazy">
-                                <div class="trending-shadow"></div>
-                                <div class="trending-shadow2"></div>
-                                <div class="trending-hover-title">${movie.title}</div>
-                                <div class="trending-content">
-                                    <div class="trending-slide-rating d-flex justify-content-between">
-                                        <span>
-                                            <i class="fas fa-star"></i>
-                                            <span class="rating-value">${movie.rating}</span>
-                                        </span>
-                                        <span>
-                                            <i class="fas fa-calendar"></i>
-                                            <span class="rating-value">${movie.year}</span>
-                                        </span>
-                                    </div>
+// function setRecommended(data, type) {
+//     let recommendationsWrapper = document.getElementById("watch-recommended-wrapper");
+//     if (!data || data.length < 3) {
+//       logger.error("No data received from the backend");
+//       return;
+//     }
+//     recommendationsWrapper.innerHTML = "";
+//     // loop through the data and set the recommended movies
+//     data.forEach((movie) => {
+//         const movieSlide = document.createElement("div");
+//         movieSlide.classList.add("trending-slide", "swiper-slide");
+//         let title = movie.title.replace(/ /g, "-");
+//         let urlId = movie.id;
+//         if (type === "tv") {
+//           urlId = "s" + urlId;
+//         } else {
+//           urlId = "m" + urlId;
+//         }
+//         let url = `details.html?id=${urlId}&${title}`;
+//         movieSlide.innerHTML = `
+//                                 <img src="${movie.poster}" alt="Movie Poster" class="movie-slide-poster" loading="lazy">
+//                                 <div class="trending-shadow"></div>
+//                                 <div class="trending-shadow2"></div>
+//                                 <div class="trending-hover-title">${movie.title}</div>
+//                                 <div class="trending-content">
+//                                     <div class="trending-slide-rating d-flex justify-content-between">
+//                                         <span>
+//                                             <i class="fas fa-star"></i>
+//                                             <span class="rating-value">${movie.rating}</span>
+//                                         </span>
+//                                         <span>
+//                                             <i class="fas fa-calendar"></i>
+//                                             <span class="rating-value">${movie.year}</span>
+//                                         </span>
+//                                     </div>
      
     
-                                    <div class="trending-slide-actions">
-                                    <a class="btn btn-primary" href="${url}">Watch</a>
-                                    <a class="btn btn-secondary" data-watchlistbtn="${urlId}"><i class="fas fa-plus"></i></a>
-                                </div>
-                                </div>
-                            `;
-                            recommendationsWrapper.appendChild(movieSlide);
+//                                     <div class="trending-slide-actions">
+//                                     <a class="btn btn-primary" href="${url}">Watch</a>
+//                                     <a class="btn btn-secondary" data-watchlistbtn="${urlId}"><i class="fas fa-plus"></i></a>
+//                                 </div>
+//                                 </div>
+//                             `;
+//                             recommendationsWrapper.appendChild(movieSlide);
     
-        // add event listener
-        movieSlide.addEventListener("mouseover", () => {
-          movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
-        });
-        movieSlide.addEventListener("mouseout", () => {
-          movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
-        });
+//         // add event listener
+//         movieSlide.addEventListener("mouseover", () => {
+//           movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
+//         });
+//         movieSlide.addEventListener("mouseout", () => {
+//           movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
+//         });
     
-        // add mobile touch event
-        movieSlide.addEventListener("touchstart", () => {
-          movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
-        });
-        movieSlide.addEventListener("touchend", () => {
-          movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
-        });
-});
-}
+//         // add mobile touch event
+//         movieSlide.addEventListener("touchstart", () => {
+//           movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
+//         });
+//         movieSlide.addEventListener("touchend", () => {
+//           movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
+//         });
+// });
+// }
 
 function invalidId(message = "") {
   // For now, just log it

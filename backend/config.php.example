@@ -15,3 +15,7 @@ $TMDB = array(
     'api_key_header' => 'Authorization: Bearer ' . $TMDB_API_KEY,
     'accept_header' => 'accept: application/json',
 );
+
+// Cache
+$db = new PDO('sqlite:cache.db');
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
