@@ -1,4 +1,4 @@
-# JMovies - Movie Library
+# JMovies - TMDB Library
 
 ![assets/image/logo/logo.png](assets/image/logo/logo.png)
 
