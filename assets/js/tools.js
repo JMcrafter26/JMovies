@@ -148,7 +148,7 @@ function insertIntoSwiper(wrapperId, type, data) {
 
   console.log(data);
 
-  if (!data || data.length < 3) {
+  if (!data || data.length < 1) {
     console.error("No data received from the backend");
     return;
   }
