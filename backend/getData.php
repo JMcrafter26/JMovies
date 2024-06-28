@@ -190,7 +190,8 @@ if($type == 'watchlist') {
 } else {
     $response = getData($type);
 }
-    if (!$response) {
+
+if (!$response) {
     echo json_encode(array('status' => 'error', 'message' => 'No data found'));
     exit;
 }
@@ -261,6 +262,43 @@ switch ($type) {
 
             // only keep top 5
             $parsedResponse = array_slice($parsedResponse, 0, 5);
+        }
+        break;
+    case 'search/multi':
+        $query = $_GET['query'];
+        $response['query'] = $query;
+        // die(json_encode($response));
+        if (!isset($response['results']) || empty($response['results'])) {
+            echo json_encode(array('status' => 'error', 'message' => 'No results found'));
+            exit;
+        }
+        foreach ($response['results'] as $result) {
+            if ($result['media_type'] == 'tv') {
+                $prasedType = 'tv';
+            } else if ($result['media_type'] == 'person') {
+                continue;
+            } else {
+                $prasedType = 'movie';
+            }
+
+            
+            $parsedResponse[] = array(
+                'id' => $result['id'],
+                'title' => $result['title'] ?? $result['name'],
+                'poster' => $TMDB['image_url'] . 'w500' . $result['poster_path'],
+                'release_date' => $result['release_date'] ?? $result['first_air_date'],
+                'year' => substr($result['release_date'] ?? $result['first_air_date'], 0, 4),
+                'type' => $prasedType,
+                'rating' => strpos($result['vote_average'], '.') ? number_format($result['vote_average'], 1) : $result['vote_average'] . '.0',
+            );
+
+            // sort by rating
+            // usort($parsedResponse, function ($a, $b) {
+            //     return $b['rating'] <=> $a['rating'];
+            // });
+            
+            // only keep top 5
+            // $parsedResponse = array_slice($parsedResponse, 0, 5);
         }
         break;
         // if type is movie/[id containing only numbers]
@@ -590,6 +628,15 @@ function getData($type)
         // $additional = 'id';
     // }
     // die($additional);
+
+    // if type includes is search/multi, add $_GET['query'] to the url
+    if ($type == 'search/multi') {
+        if(!isset($_GET['query']) || empty($_GET['query'])) {
+            echo json_encode(array('status' => 'error', 'message' => 'No query provided'));
+            exit;
+        }
+        $additional = $additional . '&query=' . urlencode($_GET['query']);
+    }
 
     // if type includes is movie/[id containing only numbers] or tv/[id containing only numbers]
     if (preg_match('/^movie\/[0-9]+$/', $type) || preg_match('/^tv\/[0-9]+$/', $type)) {

@@ -156,7 +156,7 @@ function insertIntoSwiper(wrapperId, type, data) {
   wrapper.empty();
   $.each(data, function(index, data) {
     const wrapperChild = $("<div>").addClass("trending-slide swiper-slide hover-poster");
-    let title = data.title.replace(/ /g, "-");
+    let title = data.title;
     let urlId = data.id;
     let type = data.type;
     if (type === "tv") {
@@ -287,3 +287,21 @@ $(document).on("error", "img", function () {
     $(this).css("background-image", "url('assets/image/banner_placeholder.png')");
   }
 });
+
+// if button with data-search="button" is clicked, get the value of the input with data-search="input" that has a value and redirect to search.html
+$(document).on("click", "[data-search='button']", function (e) {
+  search(e);
+});
+
+function search(event) {
+  event.preventDefault();
+  logger.info("Search button clicked");
+
+  // get all elements with data-search="input" and check if they have a value
+  let search = document.querySelectorAll("[data-search='input']");
+  for (let i = 0; i < search.length; i++) {
+    if (search[i].value) {
+      window.location.href = `search.html?q=${search[i].value}`;
+    }
+  }
+}

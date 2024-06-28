@@ -353,20 +353,23 @@ function setDetails(data, type) {
   );
   $("#watch-genres").text(details.genres.map((genre) => genre.name).join(", "));
   // crew, the name of the person and the job
-  if (details.crew.length > 0) {
+  if (details.crew.length > 3 && details.crew != "NULL") {
     $("#watch-crew").html(
-      details.crew.map((crew) => crew.name + " (" + crew.job + ")").join(", ") +
-        " and more"
+      details.crew.map((crew) => crew.name + " (" + crew.job + ")").join(", ")
     );
   } else {
     $("#watch-crew").text("-");
   }
   // cast, the name of the person and the character
-  $("#watch-cast").html(
-    details.cast
-      .map((cast) => cast.name + " (" + cast.character + ")")
-      .join(", ") + " and more"
-  );
+  if (details.cast.length > 3 && details.cast != "NULL") {
+    $("#watch-cast").html(
+      details.cast
+        .map((cast) => cast.name + " (" + cast.character + ")")
+        .join(", ")
+    );
+  } else {
+    $("#watch-cast").text("-");
+  }
   $("#watch-production").text(
     details.production_companies.map((company) => company.name).join(", ")
   );

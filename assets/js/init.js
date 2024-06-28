@@ -105,7 +105,15 @@ function pageInit() {
     } else {
       watchInit();
     }
-  } else if (pageName === "about") {
+  } else if (pageName === "search") {
+    if (!loadjs.isDefined("search")) {
+      loadjs(["assets/js/search.js"], "search", function () {
+        logger.debug("Search script loaded");
+        searchInit();
+      });
+    } else {
+      searchInit();
+    }
   }
 
   initSwiper();

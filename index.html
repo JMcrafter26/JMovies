@@ -156,35 +156,29 @@
             <a class="navbar-brand" href="./">
                 <img src="assets/image/logo/logo.png" alt="logo" width="100">
             </a>
-            <!-- center search bar -->
 
             <!-- right side buttons -->
             <div class="d-flex ">
                 <form class="d-none d-lg-flex d-md-flex input-group">
                     <input class="form-control form-control-outline-primary" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+                        aria-label="Search" data-search="input">
+                    <button class="btn btn-outline-primary" type="submit"
+                    data-search="button"><i class="fas fa-search"></i></button>
                 </form>
-                <button class="btn btn-outline-primary d-block d-lg-none d-md-none"><i
+                <button class="btn btn-outline-primary d-block d-lg-none d-md-none" data-search="button" data-bs-toggle="collapse" data-bs-target="#mobile-search"
+                ><i
                         class="fas fa-search"></i></button>
                 <button class="btn btn-outline-primary mx-2"><i class="fas fa-user"></i></button>
-                <!-- <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#categories"><i
-                        class="fas fa-bars"></i></button> -->
             </div>
         </div>
     </nav>
-    <!-- categories -->
-    <div class="collapse mt-2" id="categories">
-        <div class="container container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <ul class="list-group">
-                        <li class="list-group-item">Action</li>
-                        <li class="list-group-item">Adventure</li>
-                        <li class="list-group-item">Comedy</li>
-                    </ul>
-                </div>
-            </div>
+    <div class="collapse mt-2 mb-2" id="mobile-search">
+        <div class="container">
+            <form class="d-flex input-group" data-search="form" onsubmit="search(event)">
+                <input class="form-control form-control-outline-primary" type="search" placeholder="Search"
+                    aria-label="Search" data-search="input">
+                <button class="btn btn-outline-primary" type="submit" data-search="button"><i class="fas fa-arrow-right"></i></button>
+            </form>
         </div>
     </div>
 
