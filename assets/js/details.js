@@ -107,7 +107,7 @@ function getDetails() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let data = JSON.parse(xhr.responseText);
-      logger.info("Details received", data);
+      // logger.info("Details received" + data);
       console.log(data);
       if (data.error) {
         invalidId(data.error);
@@ -426,7 +426,7 @@ function getRecommended() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let data = JSON.parse(xhr.responseText);
-      logger.info("Recommended received", data);
+      // logger.info("Recommended received", data);
       console.log(data);
       if (data.error) {
         invalidId(data.error);
