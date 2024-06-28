@@ -97,10 +97,11 @@ function pageInit() {
         loadjs(["assets/js/details.js"], "watch", function () {
         logger.debug("Watch script loaded");
         // check if assets/js/fetchUrl.js exists, if it does, load it
-        loadjs("assets/js/fetchUrl.js", function () {
-          logger.debug("FetchUrl script loaded");
-          watchInit();
-        });
+        // loadjs("assets/js/fetchUrl.js", function () {
+        //   logger.debug("FetchUrl script loaded");
+        //   watchInit();
+        // });
+        watchInit();
       });
     } else {
       watchInit();
