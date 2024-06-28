@@ -1,7 +1,7 @@
 // tools.js
 
 const logger = new Logger({
-  // name: "My App", // The name of your app
+  name: "file", // The name of your app
   // theme: "light", // The theme of the logger (auto, light, dark)
   // style: "maxi" // The style of the logger (auto, maxi)
 });

@@ -113,7 +113,12 @@ function getDetails() {
         invalidId(data.error);
         return;
       }
+      window.details = data;
       setDetails(data, type);
+
+      // dispatch event called fetchWatchUrl
+      document.dispatchEvent(new Event("fetchWatchUrl"));
+
     }
   };
   xhr.send();

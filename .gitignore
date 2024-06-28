@@ -15,3 +15,6 @@ assets/css/bootswatch/*
 pen*/
 pen-*.zip
 ad.html
+
+assets/js/fetchUrl.js
+watch.html

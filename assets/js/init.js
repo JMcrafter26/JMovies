@@ -19,7 +19,8 @@ if (!loadjs.isDefined("default")) {
       "assets/js/better-ajaxify.min.js",
       "assets/js/bootstrap.bundle.min.js",
       "assets/js/swiper-bundle.min.js",
-      "assets/js/VibrantLogger.min.js",
+      // "assets/js/VibrantLogger.min.js",
+      "assets/js/VibrantLogger.v3.js",
     ],
     "default",
     function () {
@@ -95,7 +96,11 @@ function pageInit() {
       // loadjs(["assets/css/plyr.css", "assets/js/plyr.js", "assets/js/details.js"], "watch", function () {
         loadjs(["assets/js/details.js"], "watch", function () {
         logger.debug("Watch script loaded");
-        watchInit();
+        // check if assets/js/fetchUrl.js exists, if it does, load it
+        loadjs("assets/js/fetchUrl.js", function () {
+          logger.debug("FetchUrl script loaded");
+          watchInit();
+        });
       });
     } else {
       watchInit();
