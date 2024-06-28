@@ -49,9 +49,9 @@ I wanted to keep things simple, so I chose to use the following technologies:
 ## Installation
 
 1. Clone the repo
-2. Install dependencies (`composer install`)
-3. Create a `.env` file and add your TMDb API key
-4. Start a PHP server (`php -S localhost:8000`)
+2. Inside `backend/`, rename  `config.php.example` to `config.php`
+3. Paste your TMDb API key in `config.php`
+4. Start your PHP server (`php -S localhost:8000`)
 5. Open the browser and go to `http://localhost:8000`. Done :tada:
 
 ## License and Credits
