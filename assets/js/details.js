@@ -70,6 +70,9 @@ function watchInit() {
   });
 
   let watchId = getParamByName("id");
+  if(!watchId) {
+	  window.location.replace("./index.html");
+  }
   // if id starts with s, it is a series, else it is a movie
   let type;
   if (watchId.startsWith("s")) {
@@ -78,7 +81,9 @@ function watchInit() {
     type = "movie";
   } else {
     logger.error("Invalid watchId");
+	window.location.replace("./index.html");
     invalidId("No type in id");
+	
     return;
   }
   window.type = type;
