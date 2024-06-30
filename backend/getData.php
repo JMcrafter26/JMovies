@@ -458,6 +458,12 @@ switch ($type) {
 
 saveCache($parsedResponse);
 
+if (extension_loaded('brotli') && function_exists('brotli_compress') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'br') !== false) {
+    ob_start('ob_brotli');
+} elseif (extension_loaded('zlib') && function_exists('gzencode') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+    ob_start('ob_gzhandler');
+}
+
 echo json_encode($parsedResponse);
 exit;
 
