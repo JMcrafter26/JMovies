@@ -1,6 +1,6 @@
 # JMovies - TMDB Library
 
-![assets/image/logo/logo.png](assets/image/logo/logo.png)
+![dist/assets/image/logo/logo.png](dist/assets/image/logo/logo.png)
 
 This repo is for my school project. It is a movie library that allows users to search for movies, view movie details, and add movies to their watchlist.
 
