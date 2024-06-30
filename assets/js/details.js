@@ -20,7 +20,8 @@ function watchInit() {
   //   EVENT LISTENERS
   // if the play button is clicked, show the trailer
   $("#playTrailer").click(function () {
-    $(".trailer").addClass("active");
+    $("#watch-trailer-container").addClass("d-flex");
+    $("#watch-trailer-container").removeClass("d-none");
     // set the src of the trailer to data-src
     let src = $("#watch-trailer").attr("data-src");
     $("#watch-trailer").attr("src", src);
@@ -28,15 +29,17 @@ function watchInit() {
 
   // if the close button is clicked, hide the trailer
   $("#closeTrailer").click(function () {
-    $(".trailer").removeClass("active");
+    $("#watch-trailer-container").removeClass("d-flex");
+    $("#watch-trailer-container").addClass("d-none");
     // remove the src of the trailer
     $("#watch-trailer").attr("src", "");
   });
 
   // if clicked outside the trailer, hide the trailer
-  $(".trailer").click(function (e) {
-    if ($(e.target).hasClass("trailer")) {
-      $(".trailer").removeClass("active");
+  $("#watch-trailer-container").click(function (e) {
+    if ($(e.target).hasClass("watch-trailer")) {
+      $("#watch-trailer-container").removeClass("d-flex");
+      $("#watch-trailer-container").addClass("d-none");
       $("#watch-trailer").attr("src", "");
     }
   });
@@ -70,8 +73,8 @@ function watchInit() {
   });
 
   let watchId = getParamByName("id");
-  if(!watchId) {
-	  window.location.replace("./index.html");
+  if (!watchId) {
+    window.location.replace("./index.html");
   }
   // if id starts with s, it is a series, else it is a movie
   let type;
@@ -81,9 +84,9 @@ function watchInit() {
     type = "movie";
   } else {
     logger.error("Invalid watchId");
-	window.location.replace("./index.html");
+    window.location.replace("./index.html");
     invalidId("No type in id");
-	
+
     return;
   }
   window.type = type;
@@ -100,7 +103,6 @@ function getDetails() {
   watchId = watchId.substring(1);
 
   let type = window.type;
-
 
   logger.info("Getting details for: " + watchId + " (" + type + ")");
 
@@ -123,7 +125,6 @@ function getDetails() {
 
       // dispatch event called fetchWatchUrl
       document.dispatchEvent(new Event("fetchWatchUrl"));
-
     }
   };
   xhr.send();
@@ -308,7 +309,9 @@ function setDetails(data, type) {
   $("#watch-release-year").text(details.year);
   let shortDescription = details.description;
   if (shortDescription.length > 200) {
-    shortDescription = shortDescription.substring(0, 200) + "... <a class='text-body' href='#description' onclick='document.getElementById(\"detailsBtn\").click(); document.getElementById(\"details-movie\").scrollIntoView();' >Read more</a>";
+    shortDescription =
+      shortDescription.substring(0, 200) +
+      "... <a class='text-body' href='#description' onclick='document.getElementById(\"detailsBtn\").click(); document.getElementById(\"details-movie\").scrollIntoView();' >Read more</a>";
   }
   $("#watch-short-description").html(shortDescription);
   $("#watch-age-rating").text(details.age_rating + "+");
@@ -320,6 +323,11 @@ function setDetails(data, type) {
   } else {
     $("#watch-genre").text("-");
   }
+
+  // calculate runtime
+  let hours = Math.floor(details.runtime / 60);
+  let minutes = details.runtime % 60;
+  details.runtime_text = hours + "h " + minutes + "m";
   $("#watch-duration").text(details.runtime_text);
   $("#watch-trailer").attr("data-src", details.trailerEmbed);
   if (details.trailerEmbed != "" && details.trailerEmbed != "-") {
@@ -332,7 +340,7 @@ function setDetails(data, type) {
   } else {
     $("#watch-watchlistBtn").attr("data-watchlistbtn", "m" + details.id);
   }
-  if(isInWatchlist($("#watch-watchlistBtn").attr("data-watchlistbtn"))) {
+  if (isInWatchlist($("#watch-watchlistBtn").attr("data-watchlistbtn"))) {
     $("#watch-watchlistBtn").html(`<i class="fas fa-check"></i> Watchlist`);
   } else {
     $("#watch-watchlistBtn").html(`<i class="fas fa-plus"></i> Watchlist`);
@@ -403,6 +411,48 @@ function setDetails(data, type) {
     moreInfo = moreInfo.substring(0, moreInfo.length - 3);
   }
   $("#watch-more-info").html(moreInfo);
+
+  // add links to watch-providers-wrapper to various streaming sites
+  let watchProviders = data.watch_providers;
+  let watchProvidersWrapper = document.getElementById(
+    "watch-providers-wrapper"
+  );
+  if (watchProviders != null) {
+  // clear the innerHTML of watchProvidersWrapper
+  watchProvidersWrapper.innerHTML = "";
+  // loop through the watchProviders and add the links
+  for (let provider in watchProviders) {
+    let providerData = watchProviders[provider];
+    /* 
+                        <div class="watch-provider swiper-slide">
+                        <a href="#" target="_blank" title="Provider Name">
+                            <img src="assets/image/provider_placeholder.png" alt="Provider Name">
+                        </a>
+                    </div>
+                    */
+    let providerDiv = document.createElement("div");
+    providerDiv.classList.add("watch-provider", "swiper-slide");
+    let providerLink = document.createElement("a");
+    providerLink.href = providerData.link;
+    providerLink.target = "_blank";
+    providerLink.title = providerData.provider_name;
+    let providerImg = document.createElement("img");
+    providerImg.src = providerData.logo;
+    providerImg.alt = providerData.provider_name;
+    providerLink.appendChild(providerImg);
+    providerDiv.appendChild(providerLink);
+    watchProvidersWrapper.appendChild(providerDiv);
+  }
+  // update swiper
+  const swiper = document.getElementById("watch-providers").swiper;
+  swiper.updateSlides();
+} else {
+  watchProvidersWrapper.innerHTML = `<p class="text-center">No streaming providers available</p>`;
+  // remove the swiper
+  const swiper = document.getElementById("watch-providers").swiper;
+  swiper.destroy();
+}
+
 }
 
 function getRecommended() {
@@ -424,7 +474,8 @@ function getRecommended() {
   logger.info("Getting recommended for: " + watchId + " (" + type + ")");
 
   // get the details from the backend
-  const backendUrl = window.backendUrl + `?type=${type}/${watchId}/recommendations`;
+  const backendUrl =
+    window.backendUrl + `?type=${type}/${watchId}/recommendations`;
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", backendUrl, true);
@@ -438,12 +489,10 @@ function getRecommended() {
         return;
       }
       // setRecommended(data, window.type);
-      // insertIntoSwiper(wrapperId, type, data) 
+      // insertIntoSwiper(wrapperId, type, data)
       insertIntoSwiper("watch-recommended-wrapper", window.type, data);
       const swiper = document.getElementById("watch-recommended").swiper;
       swiper.updateSlides();
-
-
     }
   };
   xhr.send();
@@ -484,8 +533,7 @@ function getRecommended() {
 //                                             <span class="rating-value">${movie.year}</span>
 //                                         </span>
 //                                     </div>
-     
-    
+
 //                                     <div class="trending-slide-actions">
 //                                     <a class="btn btn-primary" href="${url}">Watch</a>
 //                                     <a class="btn btn-secondary" data-watchlistbtn="${urlId}"><i class="fas fa-plus"></i></a>
@@ -493,7 +541,7 @@ function getRecommended() {
 //                                 </div>
 //                             `;
 //                             recommendationsWrapper.appendChild(movieSlide);
-    
+
 //         // add event listener
 //         movieSlide.addEventListener("mouseover", () => {
 //           movieSlide.querySelector(".trending-hover-title").style.opacity = 1;
@@ -501,7 +549,7 @@ function getRecommended() {
 //         movieSlide.addEventListener("mouseout", () => {
 //           movieSlide.querySelector(".trending-hover-title").style.opacity = 0;
 //         });
-    
+
 //         // add mobile touch event
 //         movieSlide.addEventListener("touchstart", () => {
 //           movieSlide.querySelector(".trending-hover-title").style.opacity = 1;

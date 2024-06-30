@@ -39,7 +39,7 @@ function search_insertResults(data) {
     return;
   }
 
-  if (!data || data.length < 3) {
+  if (!data || data.length < 1) {
     console.error("No data received from the backend");
     return;
   }

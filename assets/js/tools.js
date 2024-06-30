@@ -125,6 +125,14 @@ function getWatchlist() {
   return watchlist;
 }
 
+function getRecent() {
+  let history = getLocalStorage("history");
+  if (history === undefined) {
+    history = [];
+  }
+  return history;
+}
+
 // function repairWatchlist() {
 //   let watchlist = getWatchlist();
 //   // loop through the watchlist data and remove elements that do not start with "m" or "s"

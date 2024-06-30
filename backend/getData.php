@@ -17,7 +17,11 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
     $TMDB['page'] = $_GET['page'];
 }
 
-if($type == 'watchlist') {
+if (isset($_GET['cache']) && !empty($_GET['cache'])) {
+    $TMDB['cache'] = $_GET['cache'];
+}
+
+if ($type == 'watchlist') {
     if (!isset($_POST['watchlist']) || empty($_POST['watchlist'])) {
         echo json_encode(array('status' => 'error', 'message' => 'No watchlist provided'));
         exit;
@@ -183,10 +187,20 @@ if($type == 'watchlist') {
     // save the parsedResponse to the cache
     saveCache($parsedResponse);
 
+    $response = array();
+    foreach ($parsedResponse as $item) {
+        $response[] = array(
+            'id' => $item['id'],
+            'title' => $item['title'],
+            'poster' => $item['poster'],
+            'release_date' => $item['release_date'],
+            'year' => $item['year'],
+            'type' => $item['type'],
+            'rating' => $item['rating'],
+        );
+    }
 
-
-    die(json_encode($parsedResponse));
-
+    die(json_encode($response));
 } else {
     $response = getData($type);
 }
@@ -281,7 +295,7 @@ switch ($type) {
                 $prasedType = 'movie';
             }
 
-            
+
             $parsedResponse[] = array(
                 'id' => $result['id'],
                 'title' => $result['title'] ?? $result['name'],
@@ -296,7 +310,7 @@ switch ($type) {
             // usort($parsedResponse, function ($a, $b) {
             //     return $b['rating'] <=> $a['rating'];
             // });
-            
+
             // only keep top 5
             // $parsedResponse = array_slice($parsedResponse, 0, 5);
         }
@@ -316,6 +330,7 @@ switch ($type) {
             'original_language' => $response['original_language'],
             'production_companies' => $response['production_companies'],
             'crew' => [],
+            // 'watch_providers' => [],
 
             'status' => $response['status'],
             'tagline' => $response['tagline'],
@@ -338,6 +353,9 @@ switch ($type) {
             $parsedResponse['original_title'] = $response['original_name'];
             $parsedResponse['type'] = 'tv';
         }
+
+        // die(json_encode($parsedResponse['runtime_text']));
+
 
         $runtimeText = '';
         // convert runtime to hours and minutes
@@ -419,6 +437,69 @@ switch ($type) {
             }
         }
 
+        // die(json_encode($response['watch/providers']));
+
+        // get the watch providers
+        if (isset($response['watch/providers']['results']) && !empty($response['watch/providers']['results'])) {
+            // check if watch providers are available in the current region, if not use the us providers
+            if (isset($response['watch/providers']['results'][$TMDB['region']])) {
+                $watchProviders = $response['watch/providers']['results'][$TMDB['region']];
+            } else {
+                $watchProviders = $response['watch/providers']['results']['US'];
+            }
+            // die(json_encode($watchProviders));
+            $parsedResponse['watch_providers'] = array();
+            // loop through the arrays inside the watch providers, e.g. flatrate, rent, buy
+            // foreach ($watchProviders as $key => $provider) {
+            //     // if is link, skip it
+            //     if ($key == 'link') {
+            //         continue;
+            //     }
+            //     $parsedResponse['watch_providers'][$key] = array();
+            //     foreach ($provider as $item) {
+            //         $parsedResponse['watch_providers'][$key][] = array(
+            //             'display_priority' => $item['display_priority'],
+            //             'logo' => $TMDB['image_url'] . 'w92' . $item['logo_path'],
+            //             'provider_id' => $item['provider_id'],
+            //             'provider_name' => $item['provider_name'],
+            //         );
+            //     }
+            // }
+
+            // merge the arrays into one
+            $parsedResponse['watch_providers'] = array();
+            foreach ($watchProviders as $key => $provider) {
+                if ($key == 'link') {
+                    continue;
+                }
+                foreach ($provider as $item) {
+                    $parsedResponse['watch_providers'][] = array(
+                        'display_priority' => $item['display_priority'],
+                        'logo' => $TMDB['image_url'] . 'w92' . $item['logo_path'],
+                        'provider_id' => $item['provider_id'],
+                        'provider_name' => $item['provider_name'],
+                        'link' => '',
+                    );
+                }
+            }
+
+            // sort the watch providers by display priority
+            usort($parsedResponse['watch_providers'], function ($a, $b) {
+                return $a['display_priority'] <=> $b['display_priority'];
+            });
+
+            // remove duplicates (same provider_id)
+            $parsedResponse['watch_providers'] = array_map("unserialize", array_unique(array_map("serialize", $parsedResponse['watch_providers'])));
+
+
+            // die(json_encode($parsedResponse['watch_providers']));
+
+
+        } else {
+            $parsedResponse['watch_providers'] = [];
+        }
+
+
         break;
 
         // recommend, e.g. movie/123/recommendations or tv/123/recommendations
@@ -485,11 +566,7 @@ function saveCache($data)
     */
     global $db;
     global $TMDB; // for cache_time
-    $stmt = $db->prepare('CREATE TABLE IF NOT EXISTS movie (id INTEGER PRIMARY KEY, tmdb_id INTEGER, title TEXT, poster TEXT, banner TEXT, description TEXT, release_date TEXT, type TEXT, rating TEXT, year TEXT, runtime TEXT, runtime_text TEXT, age_rating TEXT, genres TEXT, homepage TEXT, original_country TEXT, original_language TEXT, production_companies TEXT, crew TEXT, status TEXT, tagline TEXT, trailer TEXT, trailerEmbed TEXT, trailerId TEXT, external_ids TEXT, cast TEXT, created_at TEXT)');
-    $stmt->execute();
 
-    $stmt = $db->prepare('CREATE TABLE IF NOT EXISTS tv (id INTEGER PRIMARY KEY, tmdb_id INTEGER, title TEXT, poster TEXT, banner TEXT, description TEXT, release_date TEXT, type TEXT, rating TEXT, year TEXT, runtime TEXT, runtime_text TEXT, age_rating TEXT, genres TEXT, homepage TEXT, original_country TEXT, original_language TEXT, production_companies TEXT, crew TEXT, status TEXT, tagline TEXT, trailer TEXT, trailerEmbed TEXT, trailerId TEXT, external_ids TEXT, cast TEXT, created_at TEXT)');
-    $stmt->execute();
 
     // check if the data contains only one item or multiple
     if (count($data) == count($data, COUNT_RECURSIVE)) {
@@ -519,9 +596,9 @@ function saveCache($data)
         $stmt->bindParam(':tmdb_id', $item['id']);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        // compare the created_at timestamp with the current timestamp
+        // compare the created_at timestamp with the current timestamp and 
         if ($result && strtotime($result['created_at']) + $TMDB['cache_time'] > time()) {
-        // if(1 == 2) {
+            // if(1 == 2) {
             // if the item exists and is not expired, skip it
             // echo "skipped '" . $item['id'] . "' \n";
             $nulls = 0;
@@ -534,12 +611,12 @@ function saveCache($data)
                 continue;
             }
         }
-            // if the item exists but is expired, delete it
-            if ($result) {
-                $stmt = $db->prepare('DELETE FROM ' . $item['type'] . ' WHERE tmdb_id = :tmdb_id');
-                $stmt->bindParam(':tmdb_id', $item['id']);
-                $stmt->execute();
-            }
+        // if the item exists but is expired, delete it
+        if ($result) {
+            $stmt = $db->prepare('DELETE FROM ' . $item['type'] . ' WHERE tmdb_id = :tmdb_id');
+            $stmt->bindParam(':tmdb_id', $item['id']);
+            $stmt->execute();
+        }
         // echo "saving '" . $item['id'] . "' \n";
 
         $template = array(
@@ -560,6 +637,7 @@ function saveCache($data)
             'homepage' => 'NULL',
             'original_country' => 'NULL',
             'original_language' => 'NULL',
+            'original_title' => 'NULL',
             'production_companies' => 'NULL',
             'crew' => 'NULL',
             'status' => 'NULL',
@@ -569,6 +647,7 @@ function saveCache($data)
             'trailerId' => 'NULL',
             'external_ids' => 'NULL',
             'cast' => 'NULL',
+            'watch_providers' => 'NULL', // array
             'created_at' => 'NULL',
 
         );
@@ -579,7 +658,7 @@ function saveCache($data)
         // die(json_encode($item));
 
 
-        $stmt = $db->prepare('INSERT INTO ' . $item['type'] . ' (tmdb_id, title, poster, banner, description, release_date, type, rating, year, runtime, runtime_text, age_rating, genres, homepage, original_country, original_language, production_companies, crew, status, tagline, trailer, trailerEmbed, trailerId, external_ids, cast, created_at) VALUES (:tmdb_id, :title, :poster, :banner, :description, :release_date, :type, :rating, :year, :runtime, :runtime_text, :age_rating, :genres, :homepage, :original_country, :original_language, :production_companies, :crew, :status, :tagline, :trailer, :trailerEmbed, :trailerId, :external_ids, :cast, :created_at)');
+        $stmt = $db->prepare('INSERT INTO ' . $item['type'] . ' (tmdb_id, title, poster, banner, description, release_date, type, rating, year, runtime, runtime_text, age_rating, genres, homepage, original_country, original_language, original_title, production_companies, crew, status, tagline, trailer, trailerEmbed, trailerId, external_ids, cast, watch_providers, created_at) VALUES (:tmdb_id, :title, :poster, :banner, :description, :release_date, :type, :rating, :year, :runtime, :runtime_text, :age_rating, :genres, :homepage, :original_country, :original_language, :original_title, :production_companies, :crew, :status, :tagline, :trailer, :trailerEmbed, :trailerId, :external_ids, :cast, :watch_providers, :created_at)');
         $stmt->bindParam(':tmdb_id', $item['id']);
         $stmt->bindParam(':title', $item['title']);
         $stmt->bindParam(':poster', $item['poster']);
@@ -596,6 +675,7 @@ function saveCache($data)
         $stmt->bindParam(':homepage', $item['homepage']);
         $stmt->bindParam(':original_country', $item['original_country']);
         $stmt->bindParam(':original_language', $item['original_language']);
+        $stmt->bindParam(':original_title', $item['original_title']);
         $stmt->bindParam(':production_companies', json_encode($item['production_companies']));
         $stmt->bindParam(':crew', json_encode($item['crew']));
         $stmt->bindParam(':status', $item['status']);
@@ -605,6 +685,7 @@ function saveCache($data)
         $stmt->bindParam(':trailerId', $item['trailerId']);
         $stmt->bindParam(':external_ids', json_encode($item['external_ids']));
         $stmt->bindParam(':cast', json_encode($item['cast']));
+        $stmt->bindParam(':watch_providers', json_encode($item['watch_providers']));
         $stmt->bindParam(':created_at', date('Y-m-d H:i:s'));
         $stmt->execute();
 
@@ -620,82 +701,90 @@ function getData($type)
     global $TMDB;
     global $type;
     global $db;
-    // if (preg_match('/^movie\/[0-9]+$/', $type) || preg_match('/^tv\/[0-9]+$/', $type)) {
-        $additional = 'id,videos,credits,external_ids,release_dates,content_ratings,episode_run_time,media_type';
+    $additional = 'id,videos,credits,external_ids,release_dates,content_ratings,episode_run_time,media_type';
 
-        // $additional = $additional . ',details,description,genres,'; 
-    // } else {
-        // $additional = 'id';
-    // }
+    if (preg_match('/^movie\/[0-9]+$/', $type) || preg_match('/^tv\/[0-9]+$/', $type)) {
+        $additional = $additional . ',watch/providers';
+    }
     // die($additional);
 
     // if type includes is search/multi, add $_GET['query'] to the url
     if ($type == 'search/multi') {
-        if(!isset($_GET['query']) || empty($_GET['query'])) {
+        if (!isset($_GET['query']) || empty($_GET['query'])) {
             echo json_encode(array('status' => 'error', 'message' => 'No query provided'));
             exit;
         }
         $additional = $additional . '&query=' . urlencode($_GET['query']);
     }
 
-    // if type includes is movie/[id containing only numbers] or tv/[id containing only numbers]
-    if (preg_match('/^movie\/[0-9]+$/', $type) || preg_match('/^tv\/[0-9]+$/', $type)) {
-        $id = explode('/', $type)[1];
-        $cacheType = explode('/', $type)[0];
-        // echo $id;
-        // echo $type;
-        $stmt = $db->prepare('SELECT * FROM ' . $cacheType . ' WHERE tmdb_id = :tmdb_id');
-        $stmt->bindParam(':tmdb_id', $id);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    // if type includes is movie/[id containing only numbers] or tv/[id containing only numbers] and
+    if ($TMDB['cache'] == 'true') {
+        if (preg_match('/^movie\/[0-9]+$/', $type) || preg_match('/^tv\/[0-9]+$/', $type)) {
+            $id = explode('/', $type)[1];
+            $cacheType = explode('/', $type)[0];
+            // echo $id;
 
-        // count the number of NULL values in the result
+            $stmt = $db->prepare('CREATE TABLE IF NOT EXISTS movie (id INTEGER PRIMARY KEY, tmdb_id INTEGER, title TEXT, poster TEXT, banner TEXT, description TEXT, release_date TEXT, type TEXT, rating TEXT, year TEXT, runtime TEXT, runtime_text TEXT, age_rating TEXT, genres TEXT, homepage TEXT, original_country TEXT, original_language TEXT, original_title TEXT, production_companies TEXT, crew TEXT, status TEXT, tagline TEXT, trailer TEXT, trailerEmbed TEXT, trailerId TEXT, external_ids TEXT, cast TEXT, watch_providers TEXT, created_at TEXT)');
+            $stmt->execute();
+
+            $stmt = $db->prepare('CREATE TABLE IF NOT EXISTS tv (id INTEGER PRIMARY KEY, tmdb_id INTEGER, title TEXT, poster TEXT, banner TEXT, description TEXT, release_date TEXT, type TEXT, rating TEXT, year TEXT, runtime TEXT, runtime_text TEXT, age_rating TEXT, genres TEXT, homepage TEXT, original_country TEXT, original_language TEXT, original_title TEXT, production_companies TEXT, crew TEXT, status TEXT, tagline TEXT, trailer TEXT, trailerEmbed TEXT, trailerId TEXT, external_ids TEXT, cast TEXT, watch_providers TEXT, created_at TEXT)');
+            $stmt->execute();
+
+            // echo $type;
+            $stmt = $db->prepare('SELECT * FROM ' . $cacheType . ' WHERE tmdb_id = :tmdb_id');
+            $stmt->bindParam(':tmdb_id', $id);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // count the number of NULL values in the result
 
 
 
-        // die("already in cache");
-        if ($result) {
-            $nulls = 0;
-            foreach ($result as $key => $value) {
-                if ($value == 'NULL') {
-                    $nulls++;
+            // die("already in cache");
+            if ($result && strtotime($result['created_at']) + $TMDB['cache_time'] > time() && $result['watch_providers'] != "\"NULL\"" && $result['watch_providers'] != 'NULL') {
+                $nulls = 0;
+                foreach ($result as $key => $value) {
+                    if ($value == 'NULL') {
+                        $nulls++;
+                    }
                 }
-            }
 
-            if ($nulls < 5) {
-            $result['cache'] = 'true';
-            // json decode the genres and production_companies,...
-            $result['genres'] = json_decode($result['genres'], true);
-            $result['production_companies'] = json_decode($result['production_companies'], true);
-            $result['crew'] = json_decode($result['crew'], true);
-            $result['external_ids'] = json_decode($result['external_ids'], true);
-            $result['cast'] = json_decode($result['cast'], true);
-            $result['id'] = $result['tmdb_id'];
+                if ($nulls < 5) {
+                    $result['cache'] = 'true';
+                    // json decode the genres and production_companies,...
+                    $result['genres'] = json_decode($result['genres'], true);
+                    $result['production_companies'] = json_decode($result['production_companies'], true);
+                    $result['crew'] = json_decode($result['crew'], true);
+                    $result['external_ids'] = json_decode($result['external_ids'], true);
+                    $result['cast'] = json_decode($result['cast'], true);
+                    $result['watch_providers'] = json_decode($result['watch_providers'], true);
+                    $result['id'] = $result['tmdb_id'];
 
-            return json_encode($result);
+                    return json_encode($result);
+                }
             }
         }
     }
 
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $TMDB['api_url'] . $type . '?include_adult=' . $TMDB['include_adult'] . '&include_video=' . $TMDB['include_video'] . '&language=' . $TMDB['language'] . '&region=' . $TMDB['region'] . '&page=' . $TMDB['page'] . '&sort_by=' . $TMDB['sort_by'] . '&append_to_response=' . $additional,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                $TMDB['api_key_header'],
-                $TMDB['accept_header']
-            ),
-        ));
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $TMDB['api_url'] . $type . '?include_adult=' . $TMDB['include_adult'] . '&include_video=' . $TMDB['include_video'] . '&language=' . $TMDB['language'] . '&region=' . $TMDB['region'] . '&page=' . $TMDB['page'] . '&sort_by=' . $TMDB['sort_by'] . '&append_to_response=' . $additional,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            $TMDB['api_key_header'],
+            $TMDB['accept_header']
+        ),
+    ));
 
-        $response = curl_exec($curl);
-        // die($response);
+    $response = curl_exec($curl);
+    // die($response);
 
-        curl_close($curl);
-        return $response;
+    curl_close($curl);
+    return $response;
 }

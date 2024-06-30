@@ -14,6 +14,8 @@ $TMDB = array(
     'page' => '1',
     'api_key_header' => 'Authorization: Bearer ' . $TMDB_API_KEY,
     'accept_header' => 'accept: application/json',
+    'cache_time' => 60 * 60 * 24 * 7, // 1 week
+    'cache' => true,
 );
 
 // Cache

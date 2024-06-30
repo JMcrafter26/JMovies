@@ -96,12 +96,7 @@ function pageInit() {
       // loadjs(["assets/css/plyr.css", "assets/js/plyr.js", "assets/js/details.js"], "watch", function () {
         loadjs(["assets/js/details.js"], "watch", function () {
         logger.debug("Watch script loaded");
-        // check if assets/js/fetchUrl.js exists, if it does, load it
-        // loadjs("assets/js/fetchUrl.js", function () {
-        //   logger.debug("FetchUrl script loaded");
-        //   watchInit();
-        // });
-        watchInit();
+            watchInit();
       });
     } else {
       watchInit();
@@ -112,8 +107,18 @@ function pageInit() {
         logger.debug("Search script loaded");
         searchInit();
       });
+      
     } else {
       searchInit();
+    }
+  } else if (pageName === "user") {
+    if (!loadjs.isDefined("user")) {
+      loadjs(["assets/js/user.js"], "user", function () {
+        logger.debug("User script loaded");
+        userInit();
+      });
+    } else {
+      userInit();
     }
   }
 
@@ -222,6 +227,18 @@ function initSwiper() {
       },
     });
   }
+
+  if ($("#watch-providers")) {
+    swiper = new Swiper("#watch-providers", {
+      // no pagination, use freemode
+      slidesPerView: "auto",
+      spaceBetween: 10,
+      freeMode: true,
+      // loop: true,
+
+    });
+  }
+
 
 }
 
