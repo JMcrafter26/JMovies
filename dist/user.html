@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User - JMovies</title>
+    <script>
+        let startTimestamp = Date.now();
+    </script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <input type="hidden" id="pageName" value="user">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container container-fluid">
+            <a class="navbar-brand" href="./">
+                <img src="assets/image/logo/logo.png" alt="logo" width="100">
+            </a>
+            <div class="d-flex ">
+                <form class="d-none d-lg-flex d-md-flex input-group">
+                    <input class="form-control form-control-outline-primary" type="search" placeholder="Search"
+                        aria-label="Search" data-search="input">
+                    <button class="btn btn-outline-primary" type="submit" data-search="button"><i
+                            class="fas fa-search"></i></button>
+                </form>
+                <button class="btn btn-outline-primary d-block d-lg-none d-md-none" data-search="button"
+                    data-bs-toggle="collapse" data-bs-target="#mobile-search"><i class="fas fa-search"></i></button>
+                <a class="btn btn-outline-primary mx-2" href="./user.html"><i class="fas fa-user"></i></a>
+            </div>
+        </div>
+    </nav>
+    <div class="collapse mt-2 mb-2" id="mobile-search">
+        <div class="container">
+            <form class="d-flex input-group" data-search="form" onsubmit="search(event)">
+                <input class="form-control form-control-outline-primary" type="search" placeholder="Search"
+                    aria-label="Search" data-search="input">
+                <button class="btn btn-outline-primary" type="submit" data-search="button"><i
+                        class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>User</h1>
+                <hr>
+                <a href="#user-watchlist" class="btn btn-primary">Watchlist</a>
+                <a href="#user-recently-viewed" class="btn btn-primary">Recently Viewed</a>
+                <br>
+            </div>
+        </div>
+
+        <div id="watchlist-container" class="row mb-5 mt-5" id="user-watchlist">
+            <div class="col-12">
+                <h3>Watchlist <span id="clear-watchlist" class="text-primary"><i class="fas fa-trash"></i></span></h3>
+                <p>Here are the movies you have added to your watchlist.</p>
+            </div>
+            <div class="col-12">
+                <div class="searchResults">
+                    <div class="m-2 p-2 search-results-container">
+                        <div id="user-watchlist-wrapper" class="content search-results">
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row" id="user-recently-viewed">
+            <div class="col-12">
+                <h3>Recently Viewed <span id="clear-recently-viewed" class="text-primary"><i
+                            class="fas fa-trash"></i></span></h3>
+                <p>Here are the movies you have recently viewed.</p>
+            </div>
+            <div class="col-12">
+                <div class="searchResults">
+                    <div class="m-2 p-2 search-results-container">
+                        <div id="user-recently-viewed-wrapper" class="content search-results">
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trending-slide placeholder-glow">
+                                <img src="assets/image/poster_placeholder.png" alt="Movie Poster"
+                                    class="movie-slide-poster placeholder" loading="lazy">
+                                <div class="trending-shadow"></div>
+                                <div class="trending-shadow2"></div>
+                                <div class="trending-content">
+
+                                    <div class="trending-slide-rating d-flex justify-content-between">
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">8.5</span>
+                                        </span>
+                                        <span class="placeholder">
+                                            <span class="rating-value">W</span>
+                                            <span class="rating-value">2024</span>
+                                        </span>
+                                    </div>
+                                    <div class="trending-slide-actions">
+                                        <button class="btn btn-primary placeholder"></button>
+                                        <button class="btn btn-secondary placeholder"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="social-link">
+                    <ul class="">
+                        <li><a href="https://go.jm26.net/jm" target="_blank"><i class="fas fa-globe"></i></a></li>
+                        <li><a href="https://github.com/JMcrafter26/JMovies"><i class="fab fa-github"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="social-link">
+                    <ul class="d-flex list-none">
+                        <li><a href="./">Home</a></li>
+                        <li><a href="./about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="copyright">
+                    <p>© <span id="year"></span> JM26.NET</p>
+                    <p>Designed by John M. aka <a href="https://go.jm26.net/github">JMcrafter26</a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="assets/js/loadjs.min.js"></script>
+        <script src="assets/js/init.js"></script>
+
+</body>
+</html>
